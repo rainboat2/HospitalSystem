@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.CaseRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.CaseRecord" >
+    <id column="case_id" property="caseId" jdbcType="INTEGER" />
+    <result column="diagnose_type" property="diagnoseType" jdbcType="VARCHAR" />
+    <result column="reg_id" property="regId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    case_id, diagnose_type, reg_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from case_record
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from case_record
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.CaseRecord" >
+    insert into case_record (case_id, diagnose_type, reg_id, 
+      deleted)
+    values (#{caseId,jdbcType=INTEGER}, #{diagnoseType,jdbcType=VARCHAR}, #{regId,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.CaseRecord" >
+    insert into case_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="diagnoseType != null" >
+        diagnose_type,
+      </if>
+      <if test="regId != null" >
+        reg_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="diagnoseType != null" >
+        #{diagnoseType,jdbcType=VARCHAR},
+      </if>
+      <if test="regId != null" >
+        #{regId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.CaseRecord" >
+    update case_record
+    <set >
+      <if test="diagnoseType != null" >
+        diagnose_type = #{diagnoseType,jdbcType=VARCHAR},
+      </if>
+      <if test="regId != null" >
+        reg_id = #{regId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.CaseRecord" >
+    update case_record
+    set diagnose_type = #{diagnoseType,jdbcType=VARCHAR},
+      reg_id = #{regId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </update>
+</mapper>

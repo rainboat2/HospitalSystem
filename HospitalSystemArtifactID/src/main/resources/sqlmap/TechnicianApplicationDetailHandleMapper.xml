@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.TechnicianApplicationDetailHandleMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.TechnicianApplicationDetailHandle" >
+    <id column="md_id" property="mdId" jdbcType="INTEGER" />
+    <id column="appl_detail_id" property="applDetailId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    md_id, appl_detail_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailHandleKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from technician_application_detail_handle
+    where md_id = #{mdId,jdbcType=INTEGER}
+      and appl_detail_id = #{applDetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailHandleKey" >
+    delete from technician_application_detail_handle
+    where md_id = #{mdId,jdbcType=INTEGER}
+      and appl_detail_id = #{applDetailId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailHandle" >
+    insert into technician_application_detail_handle (md_id, appl_detail_id, deleted
+      )
+    values (#{mdId,jdbcType=INTEGER}, #{applDetailId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailHandle" >
+    insert into technician_application_detail_handle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mdId != null" >
+        md_id,
+      </if>
+      <if test="applDetailId != null" >
+        appl_detail_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mdId != null" >
+        #{mdId,jdbcType=INTEGER},
+      </if>
+      <if test="applDetailId != null" >
+        #{applDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailHandle" >
+    update technician_application_detail_handle
+    <set >
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where md_id = #{mdId,jdbcType=INTEGER}
+      and appl_detail_id = #{applDetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailHandle" >
+    update technician_application_detail_handle
+    set deleted = #{deleted,jdbcType=BIT}
+    where md_id = #{mdId,jdbcType=INTEGER}
+      and appl_detail_id = #{applDetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.DailyStatementMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.DailyStatement" >
+    <id column="daily_id" property="dailyId" jdbcType="INTEGER" />
+    <result column="state_time" property="stateTime" jdbcType="TIMESTAMP" />
+    <result column="gather" property="gather" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    daily_id, state_time, gather, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from daily_statement
+    where daily_id = #{dailyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from daily_statement
+    where daily_id = #{dailyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.DailyStatement" >
+    insert into daily_statement (daily_id, state_time, gather, 
+      deleted)
+    values (#{dailyId,jdbcType=INTEGER}, #{stateTime,jdbcType=TIMESTAMP}, #{gather,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.DailyStatement" >
+    insert into daily_statement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dailyId != null" >
+        daily_id,
+      </if>
+      <if test="stateTime != null" >
+        state_time,
+      </if>
+      <if test="gather != null" >
+        gather,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dailyId != null" >
+        #{dailyId,jdbcType=INTEGER},
+      </if>
+      <if test="stateTime != null" >
+        #{stateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gather != null" >
+        #{gather,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.DailyStatement" >
+    update daily_statement
+    <set >
+      <if test="stateTime != null" >
+        state_time = #{stateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gather != null" >
+        gather = #{gather,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where daily_id = #{dailyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.DailyStatement" >
+    update daily_statement
+    set state_time = #{stateTime,jdbcType=TIMESTAMP},
+      gather = #{gather,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=BIT}
+    where daily_id = #{dailyId,jdbcType=INTEGER}
+  </update>
+</mapper>

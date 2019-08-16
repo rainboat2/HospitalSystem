@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.PrescriptionTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.PrescriptionTemplate" >
+    <id column="pres_temp_name" property="presTempName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="scope" property="scope" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pres_temp_name, create_time, scope, type, create_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from prescription_template
+    where pres_temp_name = #{presTempName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from prescription_template
+    where pres_temp_name = #{presTempName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.PrescriptionTemplate" >
+    insert into prescription_template (pres_temp_name, create_time, scope, 
+      type, create_id, deleted
+      )
+    values (#{presTempName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{scope,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.PrescriptionTemplate" >
+    insert into prescription_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="presTempName != null" >
+        pres_temp_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="scope != null" >
+        scope,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="presTempName != null" >
+        #{presTempName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scope != null" >
+        #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.PrescriptionTemplate" >
+    update prescription_template
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scope != null" >
+        scope = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where pres_temp_name = #{presTempName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.PrescriptionTemplate" >
+    update prescription_template
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      scope = #{scope,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where pres_temp_name = #{presTempName,jdbcType=VARCHAR}
+  </update>
+</mapper>

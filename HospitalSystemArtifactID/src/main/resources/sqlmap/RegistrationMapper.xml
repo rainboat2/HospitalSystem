@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.RegistrationMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.Registration" >
+    <id column="reg_id" property="regId" jdbcType="INTEGER" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="regl_code" property="reglCode" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="od_id" property="odId" jdbcType="INTEGER" />
+    <result column="medical_no" property="medicalNo" jdbcType="INTEGER" />
+    <result column="print_record" property="printRecord" jdbcType="BIT" />
+    <result column="settle_type" property="settleType" jdbcType="VARCHAR" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    reg_id, reg_time, regl_code, state, od_id, medical_no, print_record, settle_type, 
+    c_id, dept_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from registration
+    where reg_id = #{regId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from registration
+    where reg_id = #{regId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.Registration" >
+    insert into registration (reg_id, reg_time, regl_code, 
+      state, od_id, medical_no, 
+      print_record, settle_type, c_id, 
+      dept_id, deleted)
+    values (#{regId,jdbcType=INTEGER}, #{regTime,jdbcType=TIMESTAMP}, #{reglCode,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{odId,jdbcType=INTEGER}, #{medicalNo,jdbcType=INTEGER}, 
+      #{printRecord,jdbcType=BIT}, #{settleType,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER}, 
+      #{deptId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.Registration" >
+    insert into registration
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="regId != null" >
+        reg_id,
+      </if>
+      <if test="regTime != null" >
+        reg_time,
+      </if>
+      <if test="reglCode != null" >
+        regl_code,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="odId != null" >
+        od_id,
+      </if>
+      <if test="medicalNo != null" >
+        medical_no,
+      </if>
+      <if test="printRecord != null" >
+        print_record,
+      </if>
+      <if test="settleType != null" >
+        settle_type,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="regId != null" >
+        #{regId,jdbcType=INTEGER},
+      </if>
+      <if test="regTime != null" >
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reglCode != null" >
+        #{reglCode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="odId != null" >
+        #{odId,jdbcType=INTEGER},
+      </if>
+      <if test="medicalNo != null" >
+        #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="printRecord != null" >
+        #{printRecord,jdbcType=BIT},
+      </if>
+      <if test="settleType != null" >
+        #{settleType,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.Registration" >
+    update registration
+    <set >
+      <if test="regTime != null" >
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reglCode != null" >
+        regl_code = #{reglCode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="odId != null" >
+        od_id = #{odId,jdbcType=INTEGER},
+      </if>
+      <if test="medicalNo != null" >
+        medical_no = #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="printRecord != null" >
+        print_record = #{printRecord,jdbcType=BIT},
+      </if>
+      <if test="settleType != null" >
+        settle_type = #{settleType,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where reg_id = #{regId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.Registration" >
+    update registration
+    set reg_time = #{regTime,jdbcType=TIMESTAMP},
+      regl_code = #{reglCode,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      od_id = #{odId,jdbcType=INTEGER},
+      medical_no = #{medicalNo,jdbcType=INTEGER},
+      print_record = #{printRecord,jdbcType=BIT},
+      settle_type = #{settleType,jdbcType=VARCHAR},
+      c_id = #{cId,jdbcType=INTEGER},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where reg_id = #{regId,jdbcType=INTEGER}
+  </update>
+
+    <resultMap id="reg-map" type="com.springMvc.entity.vo.RegistrationInfo">
+        <result column="pat_id_number" property="patId" jdbcType="VARCHAR"/>
+        <result column="pat_name" property="patName" jdbcType="VARCHAR"/>
+        <result column="pat_is_male" property="gender" jdbcType="TINYINT"/>
+        <result column="pat_birthday" property="birthday" jdbcType="DATE"/>
+        <result column="pat_address" property="address" jdbcType="VARCHAR"/>
+        <result column="reg_level_code" property="reglCode" jdbcType="VARCHAR"/>
+        <result column="_dept_id" property="deptId" jdbcType="INTEGER"/>
+        <result column="_od_id" property="odId" jdbcType="INTEGER"/>
+        <result column="_printed_recode" property="printed" jdbcType="TINYINT"/>
+        <result column="_settle_type" property="type" jdbcType="VARCHAR"/>
+        <result column="_c_id" property="cId" jdbcType="INTEGER"/>
+        <result column="success" property="success" jdbcType="TINYINT"/>
+        <result column="med_no" property="medicalNo" jdbcType="INTEGER"/>
+        <result column="reg_id" property="regId" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="registration" parameterType="com.springMvc.entity.vo.RegistrationInfo" statementType="CALLABLE">
+        {call registration(
+            #{patId, jdbcType=VARCHAR, mode=IN},
+            #{patName, jdbcType=VARCHAR, mode=IN},
+            #{gender, jdbcType=TINYINT, mode=IN},
+            #{birthday, jdbcType=DATE, mode=IN},
+            #{address, jdbcType=VARCHAR, mode=IN},
+            #{reglCode, jdbcType=VARCHAR, mode=IN},
+            #{deptId, jdbcType=INTEGER, mode=IN},
+            #{odId, jdbcType=INTEGER, mode=IN},
+            #{printed, jdbcType=TINYINT, mode=IN},
+            #{type, jdbcType=VARCHAR, mode=IN},
+            #{cId, jdbcType=VARCHAR, mode=IN},
+            #{success, jdbcType=TINYINT, mode=OUT},
+            #{medicalNo, jdbcType=INTEGER, mode=OUT},
+            #{regId, jdbcType=INTEGER, mode=OUT}
+            )}
+    </select>
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.DiseaseCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.DiseaseCategory" >
+    <id column="dise_cate_id" property="diseCateId" jdbcType="INTEGER" />
+    <result column="cate_code" property="cateCode" jdbcType="VARCHAR" />
+    <result column="cate_name" property="cateName" jdbcType="VARCHAR" />
+    <result column="sequence_no" property="sequenceNo" jdbcType="INTEGER" />
+    <result column="dist_type" property="distType" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dise_cate_id, cate_code, cate_name, sequence_no, dist_type, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from disease_category
+    where dise_cate_id = #{diseCateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from disease_category
+    where dise_cate_id = #{diseCateId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.DiseaseCategory" >
+    insert into disease_category (dise_cate_id, cate_code, cate_name, 
+      sequence_no, dist_type, deleted
+      )
+    values (#{diseCateId,jdbcType=INTEGER}, #{cateCode,jdbcType=VARCHAR}, #{cateName,jdbcType=VARCHAR}, 
+      #{sequenceNo,jdbcType=INTEGER}, #{distType,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.DiseaseCategory" >
+    insert into disease_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="diseCateId != null" >
+        dise_cate_id,
+      </if>
+      <if test="cateCode != null" >
+        cate_code,
+      </if>
+      <if test="cateName != null" >
+        cate_name,
+      </if>
+      <if test="sequenceNo != null" >
+        sequence_no,
+      </if>
+      <if test="distType != null" >
+        dist_type,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="diseCateId != null" >
+        #{diseCateId,jdbcType=INTEGER},
+      </if>
+      <if test="cateCode != null" >
+        #{cateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cateName != null" >
+        #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNo != null" >
+        #{sequenceNo,jdbcType=INTEGER},
+      </if>
+      <if test="distType != null" >
+        #{distType,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.DiseaseCategory" >
+    update disease_category
+    <set >
+      <if test="cateCode != null" >
+        cate_code = #{cateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cateName != null" >
+        cate_name = #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNo != null" >
+        sequence_no = #{sequenceNo,jdbcType=INTEGER},
+      </if>
+      <if test="distType != null" >
+        dist_type = #{distType,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where dise_cate_id = #{diseCateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.DiseaseCategory" >
+    update disease_category
+    set cate_code = #{cateCode,jdbcType=VARCHAR},
+      cate_name = #{cateName,jdbcType=VARCHAR},
+      sequence_no = #{sequenceNo,jdbcType=INTEGER},
+      dist_type = #{distType,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where dise_cate_id = #{diseCateId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.TechnicianApplicationDetailPaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.TechnicianApplicationDetailPayment" >
+    <id column="appl_pay_id" property="applPayId" jdbcType="INTEGER" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="appl_detail_id" property="applDetailId" jdbcType="INTEGER" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    appl_pay_id, c_id, appl_detail_id, fee, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from technician_application_detail_payment
+    where appl_pay_id = #{applPayId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from technician_application_detail_payment
+    where appl_pay_id = #{applPayId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailPayment" >
+    insert into technician_application_detail_payment (appl_pay_id, c_id, appl_detail_id, 
+      fee, deleted)
+    values (#{applPayId,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{applDetailId,jdbcType=INTEGER}, 
+      #{fee,jdbcType=DECIMAL}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailPayment" >
+    insert into technician_application_detail_payment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applPayId != null" >
+        appl_pay_id,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="applDetailId != null" >
+        appl_detail_id,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applPayId != null" >
+        #{applPayId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="applDetailId != null" >
+        #{applDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailPayment" >
+    update technician_application_detail_payment
+    <set >
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="applDetailId != null" >
+        appl_detail_id = #{applDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where appl_pay_id = #{applPayId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.TechnicianApplicationDetailPayment" >
+    update technician_application_detail_payment
+    set c_id = #{cId,jdbcType=INTEGER},
+      appl_detail_id = #{applDetailId,jdbcType=INTEGER},
+      fee = #{fee,jdbcType=DECIMAL},
+      deleted = #{deleted,jdbcType=BIT}
+    where appl_pay_id = #{applPayId,jdbcType=INTEGER}
+  </update>
+</mapper>

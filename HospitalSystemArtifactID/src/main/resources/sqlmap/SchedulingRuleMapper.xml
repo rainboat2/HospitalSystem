@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.SchedulingRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.SchedulingRule" >
+    <id column="shed_id" property="shedId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="rule" property="rule" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="od_id" property="odId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shed_id, name, rule, create_time, od_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from scheduling_rule
+    where shed_id = #{shedId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scheduling_rule
+    where shed_id = #{shedId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.SchedulingRule" >
+    insert into scheduling_rule (shed_id, name, rule, 
+      create_time, od_id, deleted)
+    values (#{shedId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{rule,jdbcType=CHAR}, 
+      #{createTime,jdbcType=DATE}, #{odId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.SchedulingRule" >
+    insert into scheduling_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shedId != null" >
+        shed_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="rule != null" >
+        rule,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="odId != null" >
+        od_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shedId != null" >
+        #{shedId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null" >
+        #{rule,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="odId != null" >
+        #{odId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.SchedulingRule" >
+    update scheduling_rule
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null" >
+        rule = #{rule,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="odId != null" >
+        od_id = #{odId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where shed_id = #{shedId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.SchedulingRule" >
+    update scheduling_rule
+    set name = #{name,jdbcType=VARCHAR},
+      rule = #{rule,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      od_id = #{odId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where shed_id = #{shedId,jdbcType=INTEGER}
+  </update>
+</mapper>

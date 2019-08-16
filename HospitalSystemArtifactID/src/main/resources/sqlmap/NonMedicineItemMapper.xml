@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.NonMedicineItemMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.NonMedicineItem" >
+    <id column="non_mid" property="nonMid" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="format" property="format" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="exp_id" property="expId" jdbcType="INTEGER" />
+    <result column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="mnemonic_code" property="mnemonicCode" jdbcType="VARCHAR" />
+    <result column="record_type" property="recordType" jdbcType="VARCHAR" />
+    <result column="creation_date" property="creationDate" jdbcType="DATE" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    non_mid, code, name, format, price, exp_id, dept_id, mnemonic_code, record_type, 
+    creation_date, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from non_medicine_item
+    where non_mid = #{nonMid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from non_medicine_item
+    where non_mid = #{nonMid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.NonMedicineItem" >
+    insert into non_medicine_item (non_mid, code, name, 
+      format, price, exp_id, 
+      dept_id, mnemonic_code, record_type, 
+      creation_date, deleted)
+    values (#{nonMid,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{format,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{expId,jdbcType=INTEGER}, 
+      #{deptId,jdbcType=INTEGER}, #{mnemonicCode,jdbcType=VARCHAR}, #{recordType,jdbcType=VARCHAR}, 
+      #{creationDate,jdbcType=DATE}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.NonMedicineItem" >
+    insert into non_medicine_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nonMid != null" >
+        non_mid,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="format != null" >
+        format,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="expId != null" >
+        exp_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="mnemonicCode != null" >
+        mnemonic_code,
+      </if>
+      <if test="recordType != null" >
+        record_type,
+      </if>
+      <if test="creationDate != null" >
+        creation_date,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nonMid != null" >
+        #{nonMid,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null" >
+        #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="expId != null" >
+        #{expId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="mnemonicCode != null" >
+        #{mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.NonMedicineItem" >
+    update non_medicine_item
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null" >
+        format = #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="expId != null" >
+        exp_id = #{expId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="mnemonicCode != null" >
+        mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        record_type = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null" >
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where non_mid = #{nonMid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.NonMedicineItem" >
+    update non_medicine_item
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      format = #{format,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      exp_id = #{expId,jdbcType=INTEGER},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+      record_type = #{recordType,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=DATE},
+      deleted = #{deleted,jdbcType=BIT}
+    where non_mid = #{nonMid,jdbcType=INTEGER}
+  </update>
+</mapper>

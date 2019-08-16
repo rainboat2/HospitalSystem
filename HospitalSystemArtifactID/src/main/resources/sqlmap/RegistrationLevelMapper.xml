@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.RegistrationLevelMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.RegistrationLevel" >
+    <id column="regl_code" property="reglCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="limitation" property="limitation" jdbcType="INTEGER" />
+    <result column="sequence_no" property="sequenceNo" jdbcType="INTEGER" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    regl_code, name, limitation, sequence_no, fee, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from registration_level
+    where regl_code = #{reglCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from registration_level
+    where regl_code = #{reglCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.RegistrationLevel" >
+    insert into registration_level (regl_code, name, limitation, 
+      sequence_no, fee, deleted
+      )
+    values (#{reglCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{limitation,jdbcType=INTEGER}, 
+      #{sequenceNo,jdbcType=INTEGER}, #{fee,jdbcType=DECIMAL}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.RegistrationLevel" >
+    insert into registration_level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reglCode != null" >
+        regl_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="limitation != null" >
+        limitation,
+      </if>
+      <if test="sequenceNo != null" >
+        sequence_no,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reglCode != null" >
+        #{reglCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="limitation != null" >
+        #{limitation,jdbcType=INTEGER},
+      </if>
+      <if test="sequenceNo != null" >
+        #{sequenceNo,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.RegistrationLevel" >
+    update registration_level
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="limitation != null" >
+        limitation = #{limitation,jdbcType=INTEGER},
+      </if>
+      <if test="sequenceNo != null" >
+        sequence_no = #{sequenceNo,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where regl_code = #{reglCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.RegistrationLevel" >
+    update registration_level
+    set name = #{name,jdbcType=VARCHAR},
+      limitation = #{limitation,jdbcType=INTEGER},
+      sequence_no = #{sequenceNo,jdbcType=INTEGER},
+      fee = #{fee,jdbcType=DECIMAL},
+      deleted = #{deleted,jdbcType=BIT}
+    where regl_code = #{reglCode,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getAllLevel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from registration_level
+    where true;
+  </select>
+</mapper>

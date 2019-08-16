@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.FinalDiagnoseMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.FinalDiagnose" >
+    <id column="case_id" property="caseId" jdbcType="INTEGER" />
+    <id column="dise_id" property="diseId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    case_id, dise_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.springMvc.entity.po.FinalDiagnoseKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from final_diagnose
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and dise_id = #{diseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.springMvc.entity.po.FinalDiagnoseKey" >
+    delete from final_diagnose
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and dise_id = #{diseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.FinalDiagnose" >
+    insert into final_diagnose (case_id, dise_id, deleted
+      )
+    values (#{caseId,jdbcType=INTEGER}, #{diseId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.FinalDiagnose" >
+    insert into final_diagnose
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="diseId != null" >
+        dise_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="diseId != null" >
+        #{diseId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.FinalDiagnose" >
+    update final_diagnose
+    <set >
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and dise_id = #{diseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.FinalDiagnose" >
+    update final_diagnose
+    set deleted = #{deleted,jdbcType=BIT}
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and dise_id = #{diseId,jdbcType=INTEGER}
+  </update>
+</mapper>

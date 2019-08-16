@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.MedicalTechnicianApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.MedicalTechnicianApplication" >
+    <id column="case_id" property="caseId" jdbcType="INTEGER" />
+    <id column="appl_name" property="applName" jdbcType="VARCHAR" />
+    <result column="appl_type" property="applType" jdbcType="VARCHAR" />
+    <result column="appl_state" property="applState" jdbcType="VARCHAR" />
+    <result column="medical_no" property="medicalNo" jdbcType="INTEGER" />
+    <result column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    case_id, appl_name, appl_type, appl_state, medical_no, dept_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.springMvc.entity.po.MedicalTechnicianApplicationKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from medical_technician_application
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and appl_name = #{applName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.springMvc.entity.po.MedicalTechnicianApplicationKey" >
+    delete from medical_technician_application
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and appl_name = #{applName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.MedicalTechnicianApplication" >
+    insert into medical_technician_application (case_id, appl_name, appl_type, 
+      appl_state, medical_no, dept_id, 
+      deleted)
+    values (#{caseId,jdbcType=INTEGER}, #{applName,jdbcType=VARCHAR}, #{applType,jdbcType=VARCHAR}, 
+      #{applState,jdbcType=VARCHAR}, #{medicalNo,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.MedicalTechnicianApplication" >
+    insert into medical_technician_application
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="applName != null" >
+        appl_name,
+      </if>
+      <if test="applType != null" >
+        appl_type,
+      </if>
+      <if test="applState != null" >
+        appl_state,
+      </if>
+      <if test="medicalNo != null" >
+        medical_no,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="applName != null" >
+        #{applName,jdbcType=VARCHAR},
+      </if>
+      <if test="applType != null" >
+        #{applType,jdbcType=VARCHAR},
+      </if>
+      <if test="applState != null" >
+        #{applState,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null" >
+        #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.MedicalTechnicianApplication" >
+    update medical_technician_application
+    <set >
+      <if test="applType != null" >
+        appl_type = #{applType,jdbcType=VARCHAR},
+      </if>
+      <if test="applState != null" >
+        appl_state = #{applState,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalNo != null" >
+        medical_no = #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and appl_name = #{applName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.MedicalTechnicianApplication" >
+    update medical_technician_application
+    set appl_type = #{applType,jdbcType=VARCHAR},
+      appl_state = #{applState,jdbcType=VARCHAR},
+      medical_no = #{medicalNo,jdbcType=INTEGER},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where case_id = #{caseId,jdbcType=INTEGER}
+      and appl_name = #{applName,jdbcType=VARCHAR}
+  </update>
+</mapper>

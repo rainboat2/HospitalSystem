@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.PatientMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.Patient" >
+    <id column="medical_no" property="medicalNo" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="id_number" property="idNumber" jdbcType="CHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+    <result column="is_male" property="isMale" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    medical_no, name, birthday, id_number, address, deleted, is_male
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where medical_no = #{medicalNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from patient
+    where medical_no = #{medicalNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.Patient" >
+    insert into patient (medical_no, name, birthday, 
+      id_number, address, deleted, 
+      is_male)
+    values (#{medicalNo,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{idNumber,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{deleted,jdbcType=BIT}, 
+      #{isMale,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.Patient" >
+    insert into patient
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medicalNo != null" >
+        medical_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="isMale != null" >
+        is_male,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medicalNo != null" >
+        #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+      <if test="isMale != null" >
+        #{isMale,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.Patient" >
+    update patient
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+      <if test="isMale != null" >
+        is_male = #{isMale,jdbcType=BIT},
+      </if>
+    </set>
+    where medical_no = #{medicalNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.Patient" >
+    update patient
+    set name = #{name,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      id_number = #{idNumber,jdbcType=CHAR},
+      address = #{address,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=BIT},
+      is_male = #{isMale,jdbcType=BIT}
+    where medical_no = #{medicalNo,jdbcType=INTEGER}
+  </update>
+</mapper>

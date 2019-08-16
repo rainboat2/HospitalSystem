@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.ExpenseClassMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.ExpenseClass" >
+    <id column="exp_id" property="expId" jdbcType="INTEGER" />
+    <result column="exp_code" property="expCode" jdbcType="VARCHAR" />
+    <result column="exp_name" property="expName" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    exp_id, exp_code, exp_name, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from expense_class
+    where exp_id = #{expId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from expense_class
+    where exp_id = #{expId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.ExpenseClass" >
+    insert into expense_class (exp_id, exp_code, exp_name, 
+      deleted)
+    values (#{expId,jdbcType=INTEGER}, #{expCode,jdbcType=VARCHAR}, #{expName,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.ExpenseClass" >
+    insert into expense_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="expId != null" >
+        exp_id,
+      </if>
+      <if test="expCode != null" >
+        exp_code,
+      </if>
+      <if test="expName != null" >
+        exp_name,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="expId != null" >
+        #{expId,jdbcType=INTEGER},
+      </if>
+      <if test="expCode != null" >
+        #{expCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expName != null" >
+        #{expName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.ExpenseClass" >
+    update expense_class
+    <set >
+      <if test="expCode != null" >
+        exp_code = #{expCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expName != null" >
+        exp_name = #{expName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where exp_id = #{expId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.ExpenseClass" >
+    update expense_class
+    set exp_code = #{expCode,jdbcType=VARCHAR},
+      exp_name = #{expName,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=BIT}
+    where exp_id = #{expId,jdbcType=INTEGER}
+  </update>
+</mapper>

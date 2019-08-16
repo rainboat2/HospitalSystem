@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.PrescriptionDetailPaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.PrescriptionDetailPayment" >
+    <id column="pres_pay_id" property="presPayId" jdbcType="INTEGER" />
+    <result column="pres_detail_id" property="presDetailId" jdbcType="INTEGER" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pres_pay_id, pres_detail_id, c_id, fee, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from prescription_detail_payment
+    where pres_pay_id = #{presPayId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from prescription_detail_payment
+    where pres_pay_id = #{presPayId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.PrescriptionDetailPayment" >
+    insert into prescription_detail_payment (pres_pay_id, pres_detail_id, c_id, 
+      fee, deleted)
+    values (#{presPayId,jdbcType=INTEGER}, #{presDetailId,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, 
+      #{fee,jdbcType=DECIMAL}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.PrescriptionDetailPayment" >
+    insert into prescription_detail_payment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="presPayId != null" >
+        pres_pay_id,
+      </if>
+      <if test="presDetailId != null" >
+        pres_detail_id,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="presPayId != null" >
+        #{presPayId,jdbcType=INTEGER},
+      </if>
+      <if test="presDetailId != null" >
+        #{presDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.PrescriptionDetailPayment" >
+    update prescription_detail_payment
+    <set >
+      <if test="presDetailId != null" >
+        pres_detail_id = #{presDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where pres_pay_id = #{presPayId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.PrescriptionDetailPayment" >
+    update prescription_detail_payment
+    set pres_detail_id = #{presDetailId,jdbcType=INTEGER},
+      c_id = #{cId,jdbcType=INTEGER},
+      fee = #{fee,jdbcType=DECIMAL},
+      deleted = #{deleted,jdbcType=BIT}
+    where pres_pay_id = #{presPayId,jdbcType=INTEGER}
+  </update>
+</mapper>

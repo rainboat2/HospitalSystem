@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.HomePageMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.HomePage" >
+    <id column="case_id" property="caseId" jdbcType="INTEGER" />
+    <result column="chief_complaint" property="chiefComplaint" jdbcType="VARCHAR" />
+    <result column="present_ill" property="presentIll" jdbcType="VARCHAR" />
+    <result column="treatment_pres_ill" property="treatmentPresIll" jdbcType="VARCHAR" />
+    <result column="previous_ill" property="previousIll" jdbcType="VARCHAR" />
+    <result column="allergy" property="allergy" jdbcType="VARCHAR" />
+    <result column="health_checkup" property="healthCheckup" jdbcType="VARCHAR" />
+    <result column="check_type" property="checkType" jdbcType="VARCHAR" />
+    <result column="check_advice" property="checkAdvice" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="committed" property="committed" jdbcType="BIT" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    case_id, chief_complaint, present_ill, treatment_pres_ill, previous_ill, allergy, 
+    health_checkup, check_type, check_advice, note, committed, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from home_page
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from home_page
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.HomePage" >
+    insert into home_page (case_id, chief_complaint, present_ill, 
+      treatment_pres_ill, previous_ill, allergy, 
+      health_checkup, check_type, check_advice, 
+      note, committed, deleted)
+    values (#{caseId,jdbcType=INTEGER}, #{chiefComplaint,jdbcType=VARCHAR}, #{presentIll,jdbcType=VARCHAR}, 
+      #{treatmentPresIll,jdbcType=VARCHAR}, #{previousIll,jdbcType=VARCHAR}, #{allergy,jdbcType=VARCHAR}, 
+      #{healthCheckup,jdbcType=VARCHAR}, #{checkType,jdbcType=VARCHAR}, #{checkAdvice,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{committed,jdbcType=BIT}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.HomePage" >
+    insert into home_page
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        case_id,
+      </if>
+      <if test="chiefComplaint != null" >
+        chief_complaint,
+      </if>
+      <if test="presentIll != null" >
+        present_ill,
+      </if>
+      <if test="treatmentPresIll != null" >
+        treatment_pres_ill,
+      </if>
+      <if test="previousIll != null" >
+        previous_ill,
+      </if>
+      <if test="allergy != null" >
+        allergy,
+      </if>
+      <if test="healthCheckup != null" >
+        health_checkup,
+      </if>
+      <if test="checkType != null" >
+        check_type,
+      </if>
+      <if test="checkAdvice != null" >
+        check_advice,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="committed != null" >
+        committed,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseId != null" >
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="chiefComplaint != null" >
+        #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="presentIll != null" >
+        #{presentIll,jdbcType=VARCHAR},
+      </if>
+      <if test="treatmentPresIll != null" >
+        #{treatmentPresIll,jdbcType=VARCHAR},
+      </if>
+      <if test="previousIll != null" >
+        #{previousIll,jdbcType=VARCHAR},
+      </if>
+      <if test="allergy != null" >
+        #{allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="healthCheckup != null" >
+        #{healthCheckup,jdbcType=VARCHAR},
+      </if>
+      <if test="checkType != null" >
+        #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAdvice != null" >
+        #{checkAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="committed != null" >
+        #{committed,jdbcType=BIT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.HomePage" >
+    update home_page
+    <set >
+      <if test="chiefComplaint != null" >
+        chief_complaint = #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="presentIll != null" >
+        present_ill = #{presentIll,jdbcType=VARCHAR},
+      </if>
+      <if test="treatmentPresIll != null" >
+        treatment_pres_ill = #{treatmentPresIll,jdbcType=VARCHAR},
+      </if>
+      <if test="previousIll != null" >
+        previous_ill = #{previousIll,jdbcType=VARCHAR},
+      </if>
+      <if test="allergy != null" >
+        allergy = #{allergy,jdbcType=VARCHAR},
+      </if>
+      <if test="healthCheckup != null" >
+        health_checkup = #{healthCheckup,jdbcType=VARCHAR},
+      </if>
+      <if test="checkType != null" >
+        check_type = #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAdvice != null" >
+        check_advice = #{checkAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="committed != null" >
+        committed = #{committed,jdbcType=BIT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.HomePage" >
+    update home_page
+    set chief_complaint = #{chiefComplaint,jdbcType=VARCHAR},
+      present_ill = #{presentIll,jdbcType=VARCHAR},
+      treatment_pres_ill = #{treatmentPresIll,jdbcType=VARCHAR},
+      previous_ill = #{previousIll,jdbcType=VARCHAR},
+      allergy = #{allergy,jdbcType=VARCHAR},
+      health_checkup = #{healthCheckup,jdbcType=VARCHAR},
+      check_type = #{checkType,jdbcType=VARCHAR},
+      check_advice = #{checkAdvice,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      committed = #{committed,jdbcType=BIT},
+      deleted = #{deleted,jdbcType=BIT}
+    where case_id = #{caseId,jdbcType=INTEGER}
+  </update>
+</mapper>

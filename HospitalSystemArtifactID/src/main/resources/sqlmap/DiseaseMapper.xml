@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.DiseaseMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.Disease" >
+    <id column="dise_id" property="diseId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="icd" property="icd" jdbcType="VARCHAR" />
+    <result column="dise_cate_id" property="diseCateId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dise_id, code, name, icd, dise_cate_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from disease
+    where dise_id = #{diseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from disease
+    where dise_id = #{diseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.Disease" >
+    insert into disease (dise_id, code, name, 
+      icd, dise_cate_id, deleted
+      )
+    values (#{diseId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{icd,jdbcType=VARCHAR}, #{diseCateId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.Disease" >
+    insert into disease
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="diseId != null" >
+        dise_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="icd != null" >
+        icd,
+      </if>
+      <if test="diseCateId != null" >
+        dise_cate_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="diseId != null" >
+        #{diseId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="icd != null" >
+        #{icd,jdbcType=VARCHAR},
+      </if>
+      <if test="diseCateId != null" >
+        #{diseCateId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.Disease" >
+    update disease
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="icd != null" >
+        icd = #{icd,jdbcType=VARCHAR},
+      </if>
+      <if test="diseCateId != null" >
+        dise_cate_id = #{diseCateId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where dise_id = #{diseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.Disease" >
+    update disease
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      icd = #{icd,jdbcType=VARCHAR},
+      dise_cate_id = #{diseCateId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where dise_id = #{diseId,jdbcType=INTEGER}
+  </update>
+</mapper>

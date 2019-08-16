@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.InvoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.Invoice" >
+    <id column="inv_id" property="invId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="printed" property="printed" jdbcType="BIT" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="inv_time" property="invTime" jdbcType="TIMESTAMP" />
+    <result column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="medical_no" property="medicalNo" jdbcType="INTEGER" />
+    <result column="daily_id" property="dailyId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    inv_id, type, printed, fee, inv_time, dept_id, c_id, medical_no, daily_id, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from invoice
+    where inv_id = #{invId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from invoice
+    where inv_id = #{invId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.Invoice" >
+    insert into invoice (inv_id, type, printed, 
+      fee, inv_time, dept_id, 
+      c_id, medical_no, daily_id, 
+      deleted)
+    values (#{invId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{printed,jdbcType=BIT}, 
+      #{fee,jdbcType=DECIMAL}, #{invTime,jdbcType=TIMESTAMP}, #{deptId,jdbcType=INTEGER}, 
+      #{cId,jdbcType=INTEGER}, #{medicalNo,jdbcType=INTEGER}, #{dailyId,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.Invoice" >
+    insert into invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invId != null" >
+        inv_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="printed != null" >
+        printed,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="invTime != null" >
+        inv_time,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="medicalNo != null" >
+        medical_no,
+      </if>
+      <if test="dailyId != null" >
+        daily_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invId != null" >
+        #{invId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="printed != null" >
+        #{printed,jdbcType=BIT},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="invTime != null" >
+        #{invTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="medicalNo != null" >
+        #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="dailyId != null" >
+        #{dailyId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.Invoice" >
+    update invoice
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="printed != null" >
+        printed = #{printed,jdbcType=BIT},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="invTime != null" >
+        inv_time = #{invTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="medicalNo != null" >
+        medical_no = #{medicalNo,jdbcType=INTEGER},
+      </if>
+      <if test="dailyId != null" >
+        daily_id = #{dailyId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where inv_id = #{invId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.Invoice" >
+    update invoice
+    set type = #{type,jdbcType=VARCHAR},
+      printed = #{printed,jdbcType=BIT},
+      fee = #{fee,jdbcType=DECIMAL},
+      inv_time = #{invTime,jdbcType=TIMESTAMP},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      c_id = #{cId,jdbcType=INTEGER},
+      medical_no = #{medicalNo,jdbcType=INTEGER},
+      daily_id = #{dailyId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where inv_id = #{invId,jdbcType=INTEGER}
+  </update>
+</mapper>

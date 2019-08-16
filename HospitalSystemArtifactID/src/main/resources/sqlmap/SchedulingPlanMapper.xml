@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springMvc.dao.SchedulingPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.springMvc.entity.po.SchedulingPlan" >
+    <id column="od_id" property="odId" jdbcType="INTEGER" />
+    <id column="sche_date" property="scheDate" jdbcType="DATE" />
+    <result column="morning" property="morning" jdbcType="BIT" />
+    <result column="afternoon" property="afternoon" jdbcType="BIT" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    od_id, sche_date, morning, afternoon, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.springMvc.entity.po.SchedulingPlanKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from scheduling_plan
+    where od_id = #{odId,jdbcType=INTEGER}
+      and sche_date = #{scheDate,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.springMvc.entity.po.SchedulingPlanKey" >
+    delete from scheduling_plan
+    where od_id = #{odId,jdbcType=INTEGER}
+      and sche_date = #{scheDate,jdbcType=DATE}
+  </delete>
+  <insert id="insert" parameterType="com.springMvc.entity.po.SchedulingPlan" >
+    insert into scheduling_plan (od_id, sche_date, morning, 
+      afternoon, deleted)
+    values (#{odId,jdbcType=INTEGER}, #{scheDate,jdbcType=DATE}, #{morning,jdbcType=BIT}, 
+      #{afternoon,jdbcType=BIT}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springMvc.entity.po.SchedulingPlan" >
+    insert into scheduling_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="odId != null" >
+        od_id,
+      </if>
+      <if test="scheDate != null" >
+        sche_date,
+      </if>
+      <if test="morning != null" >
+        morning,
+      </if>
+      <if test="afternoon != null" >
+        afternoon,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="odId != null" >
+        #{odId,jdbcType=INTEGER},
+      </if>
+      <if test="scheDate != null" >
+        #{scheDate,jdbcType=DATE},
+      </if>
+      <if test="morning != null" >
+        #{morning,jdbcType=BIT},
+      </if>
+      <if test="afternoon != null" >
+        #{afternoon,jdbcType=BIT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springMvc.entity.po.SchedulingPlan" >
+    update scheduling_plan
+    <set >
+      <if test="morning != null" >
+        morning = #{morning,jdbcType=BIT},
+      </if>
+      <if test="afternoon != null" >
+        afternoon = #{afternoon,jdbcType=BIT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where od_id = #{odId,jdbcType=INTEGER}
+      and sche_date = #{scheDate,jdbcType=DATE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springMvc.entity.po.SchedulingPlan" >
+    update scheduling_plan
+    set morning = #{morning,jdbcType=BIT},
+      afternoon = #{afternoon,jdbcType=BIT},
+      deleted = #{deleted,jdbcType=BIT}
+    where od_id = #{odId,jdbcType=INTEGER}
+      and sche_date = #{scheDate,jdbcType=DATE}
+  </update>
+</mapper>
