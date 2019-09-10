@@ -92,8 +92,9 @@
                             <table class="table table-striped table-borderless table-hover">
                                 <thead>
                                 <tr>
-                                    <th style="width:32%;">病历号</th>
-                                    <th style="width:45%;">姓名</th>
+                                    <th style="width:30%;">病历号</th>
+                                    <th style="width:30%;">挂号id</th>
+                                    <th>姓名</th>
                                     <th>年龄</th>
                                 </tr>
                                 </thead>
@@ -102,13 +103,16 @@
                                     <td>test</td>
                                     <td>test</td>
                                     <td>test</td>
-                                </tr>
-                                <tr>
-                                    <td>test</td>
-                                    <td>test</td>
                                     <td>test</td>
                                 </tr>
                                 <tr>
+                                    <td>test</td>
+                                    <td>test</td>
+                                    <td>test</td>
+                                    <td>test</td>
+                                </tr>
+                                <tr>
+                                    <td>test</td>
                                     <td>test</td>
                                     <td>test</td>
                                     <td>test</td>
@@ -122,8 +126,9 @@
                             <table class="table table-striped table-borderless table-hover">
                                 <thead>
                                 <tr>
-                                    <th style="width:32%;">病历号</th>
-                                    <th style="width:45%;">姓名</th>
+                                    <th style="width:30%;">病历号</th>
+                                    <th style="width:30%;">挂号id</th>
+                                    <th>姓名</th>
                                     <th>年龄</th>
                                 </tr>
                                 </thead>
@@ -146,18 +151,19 @@
                             <li><a href="#check" data-toggle="tab">检查申请</a></li>
                             <li><a href="#examine" data-toggle="tab">检验申请</a></li>
                             <li><a href="#diagnosis" data-toggle="tab">门诊确诊</a></li>
-                            <li><a href="#technician" data-toggle="tab">处置申请</a> </li>
-                            <li><a href="#medical1" data-toggle="tab">成药处方</a> </li>
-                            <li><a href="#medical2" data-toggle="tab">草药处方</a> </li>
-                            <li><a href="#fee" data-toggle="tab">费用查询</a> </li>
+                            <li><a href="#technician" data-toggle="tab">处置申请</a></li>
+                            <li><a href="#medical1" data-toggle="tab">成药处方</a></li>
+                            <li><a href="#medical2" data-toggle="tab">草药处方</a></li>
+                            <li><a href="#fee" data-toggle="tab">费用查询</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="home" class="tab-pane active cont">
-                                <table class="col-md-8 pull-right">
+                                <table class="col-md-12 button-panel">
                                     <tr>
                                         <td><input type="button" onclick="return false;" value="暂存" class="word-button"/></td>
                                         <td><input type="button" onclick="return false;" value="提交" class="word-button"/></td>
                                         <td><input type="button" onclick="return false;" value="清空所有" class="word-button"/></td>
+                                        <td><input type="button" onclick="return false;" value="刷新" class="word-button"/></td>
                                     </tr>
                                 </table>
                                 <br>
