@@ -5,9 +5,11 @@ import com.springMvc.dao.PatientMapper;
 import com.springMvc.dao.RegistrationLevelMapper;
 import com.springMvc.dao.RegistrationMapper;
 import com.springMvc.entity.po.Patient;
+import com.springMvc.entity.po.Registration;
 import com.springMvc.entity.po.RegistrationLevel;
 import com.springMvc.entity.vo.RegistrationDoctor;
 import com.springMvc.entity.vo.RegistrationInfo;
+import com.springMvc.entity.vo.WithdrawRegistrationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.Map;
 @Service
 public class RegistrationService {
 
+    // 打印费用
     private static final BigDecimal PRINT_FEE = new BigDecimal(1);
 
     @Autowired
@@ -58,5 +61,22 @@ public class RegistrationService {
         RegistrationLevel level = registrationLevelMapper.selectByPrimaryKey(info.getReglCode());
         BigDecimal rs = level.getFee();
         return (info.getPrinted())? rs.add(PRINT_FEE) : rs;
+    }
+
+    // 该方法用于在退号时，查找指定病历号对应的挂号信息
+    public Map<String, Object> getRegistration(int medicalNo){
+        List<WithdrawRegistrationInfo> regList = registrationMapper.selectByMedicalNo(medicalNo);
+        Map<String, Object> model = new HashMap<>();
+        model.put("regList", regList);
+        return model;
+    }
+
+    // 指定挂号id，进行退号操作，并返回挂号的结果
+    public Map<String, Object> withdrawRegistration(Integer regId){
+        Map<String, Object> info = new HashMap<>();
+        info.put("regId", regId);
+        info.put("success", null);
+        registrationMapper.withdrawMedicalNo(info);
+        return info;
     }
 }

@@ -27,14 +27,15 @@ public class LoginController {
     public Map<String, String> login(@RequestParam("userId") int userId, @RequestParam("password") String password,
                                      @RequestParam("userType") int userType, HttpServletRequest request){
         // 检查用户账号密码是否正确
-        boolean flag = checker.check(userId, password, userType);
+        boolean valid = checker.check(userId, password, userType);
         Map<String, String> rs = new HashMap<String, String>();
 
-        if (!flag){
+        if (!valid){
             rs.put("success", "false");
             return rs;
         }else{
             rs.put("success", "true");
+            // 登陆成功，添加会话
             HttpSession session = request.getSession();
             session.setAttribute("userId", userId);
             session.setAttribute("password", password);

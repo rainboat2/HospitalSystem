@@ -10,7 +10,7 @@
     <title>HIS</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/myStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/myStyle.style_me.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/>
     <!--[if lt IE 9]>
@@ -49,7 +49,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="page-title">收费员挂号</div>
+                <div class="page-title">收费员>>挂号</div>
             </div>
         </div>
     </nav>
@@ -66,7 +66,7 @@
                                 <ul class="sub-menu">
                                     <li class="active"><a href="#">现场挂号</a>
                                     </li>
-                                    <li><a href="#">退号</a>
+                                    <li><a href="${pageContext.request.contextPath}/withdrawRegistration">退号</a>
                                     </li>
                                     <li><a href="#">收费</a>
                                     </li>
@@ -194,7 +194,7 @@
                                         <div class="col-sm-2 col-sm-10">
                                             <button type="submit" onclick="registration()" class="btn btn-space btn-primary">挂号</button>
                                             <button onclick="reset('reg-form')" class="btn btn-space btn-default">清空</button>
-                                            <p id = "reg-err" style="color:red;"></p>
+                                            <p id = "reg-err" class="error-message error-description"></p>
                                         </div>
                                     </div>
                                     <input type="hidden" name="cId" value="1">
@@ -497,6 +497,7 @@
         var dataTableConfig = {
             "bPaginate": true,  //是否分页。
             "bStateSave": true,
+            "aLengthMenu": [5, 3, 1],
             "language": {
                 "emptyTable": "没有可以选择的医生",
                 "info": "显示 _START_ 到 _END_ 条数据 共 _TOTAL_ 条数据",

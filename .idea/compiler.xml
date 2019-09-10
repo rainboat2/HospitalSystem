@@ -9,8 +9,5 @@
         <module name="HospitalSystemArtifactID" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="HospitalSystem" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>

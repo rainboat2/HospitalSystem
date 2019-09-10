@@ -1,7 +1,5 @@
 package com.springMvc.config.interceptor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,24 +10,21 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 
     public void afterCompletion(HttpServletRequest httpRequest,
-                                HttpServletResponse httpResponse, Object object, Exception exception)
-            throws Exception {
+                                HttpServletResponse httpResponse, Object object, Exception exception) throws Exception {
     }
-
 
     public void postHandle(HttpServletRequest request, HttpServletResponse response,
                            Object object, ModelAndView modelAndView) throws Exception {
     }
 
+    // 判断用户是否登陆，如果未登录，则重定向到登陆页面
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
-        request.setCharacterEncoding("UTF-8");
-
-        if (request.getSession(false) == null)
-            response.sendRedirect("/login");
-
-        logger.info("成功通过验证");
+//        request.setCharacterEncoding("UTF-8");
+//        if (request.getSession(false) != null)
+//            return true;
+//        response.sendRedirect(request.getContextPath() + "/login");
+//        return false;
         return true;
     }
 

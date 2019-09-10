@@ -11,7 +11,7 @@ public class PasswordChecker {
     private static final int ADMINISTRATOR = 0;
     private static final int CASHIER = 1;
     private static final int OUTPATIENT_DOCTOR = 2;
-    private static final int MEDICAL_DOCOTR = 3;
+    private static final int MEDICAL_DOCTOR = 3;
     private static final int PHARMACY_OPERATOR = 4;
 
     @Autowired
@@ -29,7 +29,7 @@ public class PasswordChecker {
     @Autowired
     PharmacyOperatorMapper pharmacyOperatorMapper;
 
-
+    // 用户名存在且密码正确才能成功通过
     public boolean check(int userId, String password, int type){
         switch (type){
             case ADMINISTRATOR:
@@ -41,7 +41,7 @@ public class PasswordChecker {
             case OUTPATIENT_DOCTOR:
                 OutpatientDoctor doctor = outpatientDoctorMapper.selectByPrimaryKey(userId);
                 return doctor != null && password.equals(doctor.getPassword());
-            case MEDICAL_DOCOTR:
+            case MEDICAL_DOCTOR:
                 MedicalDoctor doctor1 = medicalDoctorMapper.selectByPrimaryKey(userId);
                 return doctor1 != null && password.equals(doctor1.getPassword());
             case PHARMACY_OPERATOR:

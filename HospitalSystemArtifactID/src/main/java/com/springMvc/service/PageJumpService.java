@@ -22,12 +22,12 @@ public class PageJumpService {
 
     private Logger logger = LoggerFactory.getLogger(PageJumpService.class);
 
+    // 查找所有的看诊科室
     public List<Department> getAllDepartment(){
-        List<Department> list = departmentMapper.selectAllDepartment();
-        logger.debug("查询所有部门，共找到" + list.size() + "个");
-        return list;
+        return departmentMapper.selectAllDepartment();
     }
 
+    // 查找所有的挂号级别
     public List<RegistrationLevel> getAllRegistrationLevel(){
         return registrationLevelMapper.getAllLevel();
     }

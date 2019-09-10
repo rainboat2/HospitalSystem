@@ -16,7 +16,6 @@
 
 
   <mvc:interceptors>
-    <!-- 检查用户权限，对于部分不需要权限的路径进行排除 -->
     <mvc:interceptor>
       <!-- 先匹配所有路径，然后排除不需要检查的路径 -->
       <mvc:mapping path="/**" />
@@ -24,8 +23,7 @@
       <mvc:exclude-mapping path="/login" />
       <!-- 以下是静态资源 -->
       <mvc:exclude-mapping path="/assets/**" />
-      <bean id="loginInterceptor" class="com.springMvc.config.interceptor.LoginInterceptor">
-      </bean>
+      <bean id="loginInterceptor" class="com.springMvc.config.interceptor.LoginInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>
 
@@ -57,9 +55,6 @@
     <property name="prefix" value="/WEB-INF/views/" />
     <property name="suffix" value=".jsp" />
   </bean>
-
-
-  <!-- 配置dbcp数据库连接池 -->
 
   <!-- <context:property-placeholder location="classpath:db.properties"/> -->
   <!--数据库配置 -->
