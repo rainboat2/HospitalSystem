@@ -10,12 +10,29 @@
     <result column="deleted" property="deleted" jdbcType="BIT" />
     <result column="is_male" property="isMale" jdbcType="BIT" />
   </resultMap>
+
+  <resultMap id="patientForDoctorMap" type="com.springMvc.entity.vo.PatientForDoctor">
+    <result column="medical_no" property="medicalNo" jdbcType="INTEGER"/>
+    <result column="reg_id" property="regId" jdbcType="INTEGER"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="age" property="age" jdbcType="INTEGER"/>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     medical_no, name, birthday, id_number, address, deleted, is_male
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
+
+  <select id="selectByDoctor" resultMap="patientForDoctorMap" parameterType="java.util.Map">
+    select medical_no, reg_id, name, year(curdate() - birthday) as age
+    from patient join registration using (medical_no)
+    where state = #{state, jdbcType=VARCHAR} and
+      od_id = #{odId, jdbcType=INTEGER};
+  </select>
+
+  <!-- 以下为自动生成的代码-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" ><![CDATA[
+    select
+    ]]><include refid="Base_Column_List" />
     from patient
     where medical_no = #{medicalNo,jdbcType=INTEGER}
   </select>

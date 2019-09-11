@@ -37,15 +37,19 @@
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
                             <img src="${pageContext.request.contextPath}/assets/img/avatar.png" alt="Avatar">
-                            <span class="user-name">用户名</span>
+                            <span class="user-name">${sessionScope.userId}</span>
                         </a>
                         <ul role="menu" class="dropdown-menu">
                             <li>
                                 <div class="user-info">
-                                    <div class="user-name">用户名</div>
+                                    <div class="user-name">${sessionScope.userId}</div>
                                 </div>
                             </li>
-                            <li><a href="#"><span class="icon mdi mdi-power"></span>注销</a></li>
+                            <li>
+                                <a onclick="$.quit('${pageContext.request.contextPath}');return false;">
+                                    <span class="icon mdi mdi-power"></span>注销
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -88,8 +92,8 @@
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <h4>未诊患者</h4>
-                        <div class="patient-table">
-                            <table class="table table-striped table-borderless table-hover">
+                        <div id="wait-for-diagnose" class="patient-table">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width:30%;">病历号</th>
@@ -122,8 +126,8 @@
 
                         </div>
                         <h4>已诊患者</h4>
-                        <div class="patient-table">
-                            <table class="table table-striped table-borderless table-hover">
+                        <div id="diagnosed" class="patient-table">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width:30%;">病历号</th>
@@ -220,6 +224,54 @@
                                     </div>
                                     <input type="hidden" id="medicalNo">
                                 </form>
+                                <h4>评估诊断</h4>
+                                <div class="panel panel-default panel-table">
+                                    <div class="line">
+                                        <label for="type"></label>
+                                        <div class="col-sm-3">
+                                            <select id="type">
+                                                <option value="1">中医诊断</option>
+                                                <option value="2">西医诊断</option>
+                                            </select>
+                                        </div>
+                                        <div class="pull-right">
+                                            <input type="button" class="word-button" value="增加"/>
+                                            <input type="button" class="word-button" value="删除"/>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive noSwipe">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:10%;">
+                                                        <div class="be-checkbox be-checkbox-sm">
+                                                            <input id="check0" type="checkbox">
+                                                            <label for="check0"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th>ICD编码</th>
+                                                    <th>名称</th>
+                                                    <th>发病时间</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="be-checkbox be-checkbox-sm">
+                                                                <input id="check1" type="checkbox">
+                                                                <label for="check1"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>A01001</td>
+                                                        <td>伤寒</td>
+                                                        <td>2019/3/4</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="check" class="tab-pane cont">
                                 temp
@@ -256,10 +308,27 @@
 <script src="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/main.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myjs/doctor.js" type="text/javascript"></script>
+
 
 <script>
     $(document).ready(function(){
         App.init();
+        getPatient();
     });
+
+    function getPatient() {
+        $.ajax({
+            url: "/getPatientForDoctor",
+            type: "get",
+            dataType: "json",
+            success: function(rs){
+                console.log(rs);
+                filltable($("#wait-for-diagnose"), rs.waitForDiagnose);
+                filltable($("#diagnosed"), rs.diagnose);
+            }
+        });
+    }
+
 </script>
 </html>

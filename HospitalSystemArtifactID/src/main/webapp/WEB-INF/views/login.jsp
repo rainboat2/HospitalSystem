@@ -102,7 +102,7 @@
             success: function (result) {
                 console.log(result);
                 if (result.success === 'true') {
-                    alert("SUCCESS");
+                    window.location.href = result.path;
                 }else{
                     document.getElementById("err").innerText = "用户名或密码错误";
                 }

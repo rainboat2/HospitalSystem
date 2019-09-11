@@ -10,15 +10,13 @@
     <title>HIS</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/myStyle.style_me.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/style_me.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/jqvmap/jqvmap.min.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css" type="text/css"/>
 </head>
@@ -37,15 +35,19 @@
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
                             <img src="${pageContext.request.contextPath}/assets/img/avatar.png" alt="Avatar">
-                            <span class="user-name">用户名</span>
+                            <span class="user-name">${sessionScope.userId}</span>
                         </a>
                         <ul role="menu" class="dropdown-menu">
                             <li>
                                 <div class="user-info">
-                                    <div class="user-name">用户名</div>
+                                    <div class="user-name">${sessionScope.userId}</div>
                                 </div>
                             </li>
-                            <li><a href="#"><span class="icon mdi mdi-power"></span>注销</a></li>
+                            <li>
+                                <a onclick="$.quit('${pageContext.request.contextPath}');return false;">
+                                    <span class="icon mdi mdi-power"></span>注销
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -197,7 +199,7 @@
                                             <p id = "reg-err" class="error-message error-description"></p>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="cId" value="1">
+                                    <input type="hidden" name="cId" value="${requestScope.userId}">
                                 </form>
                             </div>
                         </div>
@@ -457,6 +459,7 @@
 <script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/main.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myjs/common.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>

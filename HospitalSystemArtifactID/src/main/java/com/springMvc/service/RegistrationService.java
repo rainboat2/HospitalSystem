@@ -5,8 +5,8 @@ import com.springMvc.dao.PatientMapper;
 import com.springMvc.dao.RegistrationLevelMapper;
 import com.springMvc.dao.RegistrationMapper;
 import com.springMvc.entity.po.Patient;
-import com.springMvc.entity.po.Registration;
 import com.springMvc.entity.po.RegistrationLevel;
+import com.springMvc.entity.vo.PatientForDoctor;
 import com.springMvc.entity.vo.RegistrationDoctor;
 import com.springMvc.entity.vo.RegistrationInfo;
 import com.springMvc.entity.vo.WithdrawRegistrationInfo;
@@ -79,4 +79,23 @@ public class RegistrationService {
         registrationMapper.withdrawMedicalNo(info);
         return info;
     }
+
+    // 查询指定医生需要看诊的人数
+    public Map<String, Object> getPatientForDoctor(int odId){
+        Map<String, Object> param = new HashMap<>();
+        param.put("odId", odId);
+
+        // 设置参数，分别查询未就诊和已诊断的病人
+        param.put("state", "未就诊");
+        List<PatientForDoctor> waitForDiagnose = patientMapper.selectByDoctor(param);
+        param.put("state", "已诊断");
+        List<PatientForDoctor> diagnosed = patientMapper.selectByDoctor(param);
+
+        // 将查询结果放入Map并返回
+        Map<String, Object> rs = new HashMap<>();
+        rs.put("waitForDiagnose", waitForDiagnose);
+        rs.put("diagnose", diagnosed);
+        return rs;
+    }
+
 }

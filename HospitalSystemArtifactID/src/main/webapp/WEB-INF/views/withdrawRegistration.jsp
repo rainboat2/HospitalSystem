@@ -37,15 +37,19 @@
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
                             <img src="${pageContext.request.contextPath}/assets/img/avatar.png" alt="Avatar">
-                            <span class="user-name">用户名</span>
+                            <span class="user-name">${sessionScope.userId}</span>
                         </a>
                         <ul role="menu" class="dropdown-menu">
                             <li>
                                 <div class="user-info">
-                                    <div class="user-name">用户名</div>
+                                    <div class="user-name">${sessionScope.userId}</div>
                                 </div>
                             </li>
-                            <li><a href="#"><span class="icon mdi mdi-power"></span>注销</a></li>
+                            <li>
+                                <a onclick="$.quit('${pageContext.request.contextPath}');return false;">
+                                    <span class="icon mdi mdi-power"></span>注销
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

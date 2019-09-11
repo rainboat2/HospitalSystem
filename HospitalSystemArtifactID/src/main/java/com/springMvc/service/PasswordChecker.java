@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PasswordChecker {
 
-    private static final int ADMINISTRATOR = 0;
-    private static final int CASHIER = 1;
-    private static final int OUTPATIENT_DOCTOR = 2;
-    private static final int MEDICAL_DOCTOR = 3;
-    private static final int PHARMACY_OPERATOR = 4;
+    public static final int ADMINISTRATOR = 0;
+    public static final int CASHIER = 1;
+    public static final int OUTPATIENT_DOCTOR = 2;
+    public static final int MEDICAL_DOCTOR = 3;
+    public static final int PHARMACY_OPERATOR = 4;
 
     @Autowired
     AdministratorMapper administratorMapper;

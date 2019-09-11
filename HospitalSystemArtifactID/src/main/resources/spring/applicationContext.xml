@@ -21,6 +21,7 @@
       <mvc:mapping path="/**" />
       <!-- 与登录相关的请求 -->
       <mvc:exclude-mapping path="/login" />
+      <mvc:exclude-mapping path="/userLogin"/>
       <!-- 以下是静态资源 -->
       <mvc:exclude-mapping path="/assets/**" />
       <bean id="loginInterceptor" class="com.springMvc.config.interceptor.LoginInterceptor"/>

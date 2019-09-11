@@ -18,7 +18,7 @@ public class PageJumpController {
     @Autowired
     private PageJumpService pageJumpService;
 
-    @RequestMapping(value = "/cashier", method = RequestMethod.GET)
+    @RequestMapping(value = "/cashier")
     public Map<String, Object> getCashierPage(){
         // 需要返回所有的科室、挂号级别
         List<Department> departmentList = pageJumpService.getAllDepartment();
@@ -30,12 +30,12 @@ public class PageJumpController {
         return map;
     }
 
-    @RequestMapping(value = "/withdrawRegistration", method = RequestMethod.GET)
+    @RequestMapping(value = "/withdrawRegistration")
     public String getReturnPaymentPage(){
         return "withdrawRegistration";
     }
 
-    @RequestMapping(value = "/doctor", method = RequestMethod.GET)
+    @RequestMapping(value = "/doctor")
     public String getDoctorPage(){
         return "doctor";
     }
