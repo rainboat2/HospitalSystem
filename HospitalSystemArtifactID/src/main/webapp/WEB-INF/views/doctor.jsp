@@ -12,13 +12,11 @@
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/libme/jquery-ui-1.12.1/jquery-ui.css"/>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/jqvmap/jqvmap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/style_me.css"/>
 </head>
@@ -92,51 +90,29 @@
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <h4>未诊患者</h4>
-                        <div id="wait-for-diagnose" class="patient-table">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th style="width:30%;">病历号</th>
-                                    <th style="width:30%;">挂号id</th>
-                                    <th>姓名</th>
-                                    <th>年龄</th>
-                                </tr>
-                                </thead>
+                        <div class="patient-table">
+                            <table id="wait-for-diagnose" class="table table-hover">
                                 <tbody>
                                 <tr>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                </tr>
-                                <tr>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                </tr>
-                                <tr>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
-                                    <td>test</td>
+                                    <td style="width:30%;">病历号</td>
+                                    <td style="width:30%;">挂号id</td>
+                                    <td>姓名</td>
+                                    <td>年龄</td>
                                 </tr>
                                 </tbody>
                             </table>
 
                         </div>
                         <h4>已诊患者</h4>
-                        <div id="diagnosed" class="patient-table">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th style="width:30%;">病历号</th>
-                                    <th style="width:30%;">挂号id</th>
-                                    <th>姓名</th>
-                                    <th>年龄</th>
-                                </tr>
-                                </thead>
+                        <div class="patient-table">
+                            <table id="diagnosed" class="table table-hover">
                                 <tbody>
+                                <tr>
+                                    <td style="width:30%;">病历号</td>
+                                    <td style="width:30%;">挂号id</td>
+                                    <td>姓名</td>
+                                    <td>年龄</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -146,7 +122,7 @@
             <div class="col-sm-8">
                 <div class="panel panel-default">
                     <div class="col-sm-12 line">
-                        <p class="pull-left">患者信息</p>
+                        <p id="patient-info" class="pull-left">患者信息</p>
                         <input type="button" onclick="return false;" value="诊毕" class="pull-right word-button"/>
                     </div>
                     <div class="tab-container">
@@ -162,67 +138,75 @@
                         </ul>
                         <div class="tab-content">
                             <div id="home" class="tab-pane active cont">
+                                <p id="err-message" class="error-message"></p>
                                 <table class="col-md-12 button-panel">
                                     <tr>
-                                        <td><input type="button" onclick="return false;" value="暂存" class="word-button"/></td>
-                                        <td><input type="button" onclick="return false;" value="提交" class="word-button"/></td>
-                                        <td><input type="button" onclick="return false;" value="清空所有" class="word-button"/></td>
-                                        <td><input type="button" onclick="return false;" value="刷新" class="word-button"/></td>
+                                        <td><input type="button" onclick="hold();" value="暂存" class="word-button"/></td>
+                                        <td><input type="button" onclick="submit();" value="提交" class="word-button"/></td>
+                                        <td><input type="button" onclick="clearAll();" value="清空所有" class="word-button"/></td>
+                                        <td><input type="button" onclick="flush();" value="刷新" class="word-button"/></td>
                                     </tr>
                                 </table>
                                 <br>
                                 <h4>病史内容</h4>
-                                <form class="form-horizontal" id="medical-content">
+                                <form id="medical-record" class="form-horizontal">
                                     <div class="form-group">
                                         <label for=chiefComplaint class="col-sm-2 control-label">主诉</label>
                                         <div class="col-sm-10">
-                                            <input id = "chiefComplaint" type="text"
+                                            <input id = "chiefComplaint" name="chiefComplaint" type="text"
                                                    placeholder="主诉" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="presentIll" class="col-sm-2 control-label">现病史</label>
                                         <div class="col-sm-10">
-                                            <input id="presentIll" type="text"
+                                            <input id="presentIll" name="presentIll" type="text"
                                                    placeholder="现病史" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="treatmentPresIll" class="col-sm-2 control-label">现病治疗情况</label>
                                         <div class="col-sm-10">
-                                            <input id="treatmentPresIll" type="text"
+                                            <input id="treatmentPresIll" name="treatmentPresIll"  type="text"
                                                    placeholder="现病治疗情况" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="previousIll" class="col-sm-2 control-label">既往史</label>
                                         <div class="col-sm-10">
-                                            <input id="previousIll" type="text"
+                                            <input id="previousIll" name="previousIll" type="text"
                                                    placeholder="既往史" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="allergy" class="col-sm-2 control-label">过敏史</label>
                                         <div class="col-sm-10">
-                                            <input id="allergy" type="text"
+                                            <input id="allergy" name="allergy" type="text"
                                                    placeholder="过敏史" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">体格检查</label>
+                                        <label for="healthCheckup" class="col-sm-2 control-label">体格检查</label>
                                         <div class="col-sm-10">
-                                            <input id="allergy" type="text"
+                                            <input id="healthCheckup" name="healthCheckup" type="text"
                                                    placeholder="体格检查" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="checkAdvice" class="col-sm-2 control-label">检查建议</label>
                                         <div class="col-sm-10">
-                                            <input id="checkAdvice" type="text"
+                                            <input id="checkAdvice" name="checkAdvice" type="text"
                                                    placeholder="检查建议" class="form-control input-sm">
                                         </div>
                                     </div>
-                                    <input type="hidden" id="medicalNo">
+                                    <div class="form-group">
+                                        <label for="note" class="col-sm-2 control-label">备注</label>
+                                        <div class="col-sm-10">
+                                            <input id="note" name="note" type="text"
+                                                   placeholder="备注" class="form-control input-sm">
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="form-regId" name="regId">
                                 </form>
                                 <h4>评估诊断</h4>
                                 <div class="panel panel-default panel-table">
@@ -235,38 +219,22 @@
                                             </select>
                                         </div>
                                         <div class="pull-right">
-                                            <input type="button" class="word-button" value="增加"/>
-                                            <input type="button" class="word-button" value="删除"/>
+                                            <input type="button" class="word-button" value="增加" onclick="addRow()"/>
+                                            <input type="button" class="word-button" value="删除" onclick="deleteRow($('#diagnose-table')[0])"/>
                                         </div>
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive noSwipe">
-                                            <table class="table table-hover">
+                                            <table id="diagnose-table" class="table table-hover">
                                                 <thead>
                                                 <tr>
-                                                    <th style="width:10%;">
-                                                        <div class="be-checkbox be-checkbox-sm">
-                                                            <input id="check0" type="checkbox">
-                                                            <label for="check0"></label>
-                                                        </div>
-                                                    </th>
-                                                    <th>ICD编码</th>
-                                                    <th>名称</th>
-                                                    <th>发病时间</th>
+                                                    <th style="width: 10%;"></th>
+                                                    <th style="width: 30%;">ICD编码</th>
+                                                    <th style="width: 30%">名称</th>
+                                                    <th style="width: 30%">发病时间</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="be-checkbox be-checkbox-sm">
-                                                                <input id="check1" type="checkbox">
-                                                                <label for="check1"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>A01001</td>
-                                                        <td>伤寒</td>
-                                                        <td>2019/3/4</td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -299,36 +267,33 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
+
 
 </body>
 
 <script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/libme/jquery-ui-1.12.1/external/jquery/jquery.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/libme/jquery-ui-1.12.1/jquery-ui.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/main.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/js/myjs/doctor.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myjs/doctor.js" type="text/javascript" charset="GBK"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myjs/common.js" type="text/javascript"></script>
 
 
 <script>
+
     $(document).ready(function(){
         App.init();
+        $.pagePath = "${pageContext.request.contextPath}";
         getPatient();
     });
 
-    function getPatient() {
-        $.ajax({
-            url: "/getPatientForDoctor",
-            type: "get",
-            dataType: "json",
-            success: function(rs){
-                console.log(rs);
-                filltable($("#wait-for-diagnose"), rs.waitForDiagnose);
-                filltable($("#diagnosed"), rs.diagnose);
-            }
-        });
-    }
+
 
 </script>
 </html>

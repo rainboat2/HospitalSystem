@@ -199,7 +199,7 @@
                                             <p id = "reg-err" class="error-message error-description"></p>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="cId" value="${requestScope.userId}">
+                                    <input type="hidden" name="cId" value="${sessionScope.userId}">
                                 </form>
                             </div>
                         </div>
@@ -263,7 +263,8 @@
     function registration() {
         if (!check_reg())
             return;
-        var formData = serializeJson($('#reg-form').serializeArray());
+        var formData = $.serializeJson($('#reg-form').serializeArray());
+        console.log(formData);
         formData["gender"] = (formData["gender"] === "male");
         formData["printed"] = (formData["printed"] === "on");
 
@@ -288,21 +289,21 @@
         });
     }
 
-    function serializeJson(array){
-        var serializeObj={};
-        $(array).each(function(){
-            if(serializeObj[this.name]){
-                if($.isArray(serializeObj[this.name])){
-                    serializeObj[this.name].push(this.value);
-                }else{
-                    serializeObj[this.name]=[serializeObj[this.name],this.value];
-                }
-            }else{
-                serializeObj[this.name]=this.value;
-            }
-        });
-        return serializeObj;
-    }
+    // function serializeJson(array){
+    //     var serializeObj={};
+    //     $(array).each(function(){
+    //         if(serializeObj[this.name]){
+    //             if($.isArray(serializeObj[this.name])){
+    //                 serializeObj[this.name].push(this.value);
+    //             }else{
+    //                 serializeObj[this.name]=[serializeObj[this.name],this.value];
+    //             }
+    //         }else{
+    //             serializeObj[this.name]=this.value;
+    //         }
+    //     });
+    //     return serializeObj;
+    // }
 
     // 将医生信息填充到挂号信息中
     function fillReg(id) {

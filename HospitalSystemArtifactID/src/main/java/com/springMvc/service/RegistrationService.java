@@ -49,7 +49,7 @@ public class RegistrationService {
     // 提供挂号信息，进行挂号，返回挂号是否成功，挂号id，患者病历号
     public Map<String, String> registration(RegistrationInfo info){
         registrationMapper.registration(info);
-        Map<String, String> rs = new HashMap<String, String>();
+        Map<String, String> rs = new HashMap<>();
         rs.put("success", info.getSuccess().toString());
         rs.put("regId", info.getRegId().toString());
         rs.put("medicalNo", info.getMedicalNo().toString());
@@ -94,7 +94,7 @@ public class RegistrationService {
         // 将查询结果放入Map并返回
         Map<String, Object> rs = new HashMap<>();
         rs.put("waitForDiagnose", waitForDiagnose);
-        rs.put("diagnose", diagnosed);
+        rs.put("diagnosed", diagnosed);
         return rs;
     }
 

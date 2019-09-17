@@ -162,22 +162,6 @@
     where reg_id = #{regId,jdbcType=INTEGER}
   </update>
 
-<!--    <resultMap id="reg-map" type="com.springMvc.entity.vo.RegistrationInfo">-->
-<!--        <result column="pat_id_number" property="patId" jdbcType="VARCHAR"/>-->
-<!--        <result column="pat_name" property="patName" jdbcType="VARCHAR"/>-->
-<!--        <result column="pat_is_male" property="gender" jdbcType="TINYINT"/>-->
-<!--        <result column="pat_birthday" property="birthday" jdbcType="DATE"/>-->
-<!--        <result column="pat_address" property="address" jdbcType="VARCHAR"/>-->
-<!--        <result column="reg_level_code" property="reglCode" jdbcType="VARCHAR"/>-->
-<!--        <result column="_dept_id" property="deptId" jdbcType="INTEGER"/>-->
-<!--        <result column="_od_id" property="odId" jdbcType="INTEGER"/>-->
-<!--        <result column="_printed_recode" property="printed" jdbcType="TINYINT"/>-->
-<!--        <result column="_settle_type" property="type" jdbcType="VARCHAR"/>-->
-<!--        <result column="_c_id" property="cId" jdbcType="INTEGER"/>-->
-<!--        <result column="success" property="success" jdbcType="TINYINT"/>-->
-<!--        <result column="med_no" property="medicalNo" jdbcType="INTEGER"/>-->
-<!--        <result column="reg_id" property="regId" jdbcType="INTEGER"/>-->
-<!--    </resultMap>-->
     <select id="registration" parameterType="com.springMvc.entity.vo.RegistrationInfo" statementType="CALLABLE">
         {call registration(
             #{patId, jdbcType=VARCHAR, mode=IN},

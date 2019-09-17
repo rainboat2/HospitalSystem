@@ -1,6 +1,7 @@
 package com.springMvc.dao;
 
 import com.springMvc.entity.po.HomePage;
+import com.springMvc.entity.vo.MedicalRecord;
 
 public interface HomePageMapper {
     int deleteByPrimaryKey(Integer caseId);
@@ -14,4 +15,6 @@ public interface HomePageMapper {
     int updateByPrimaryKeySelective(HomePage record);
 
     int updateByPrimaryKey(HomePage record);
+
+    void see(MedicalRecord record);
 }

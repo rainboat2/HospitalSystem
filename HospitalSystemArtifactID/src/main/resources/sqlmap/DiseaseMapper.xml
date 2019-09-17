@@ -9,6 +9,15 @@
     <result column="dise_cate_id" property="diseCateId" jdbcType="INTEGER" />
     <result column="deleted" property="deleted" jdbcType="BIT" />
   </resultMap>
+
+  <select id="selectByKeyword" resultType="java.util.Map" parameterType="java.lang.String">
+    select icd, name
+    from disease
+    where name  LIKE CONCAT(CONCAT('%', #{keyword}), '%')
+    limit 5
+  </select>
+
+
   <sql id="Base_Column_List" >
     dise_id, code, name, icd, dise_cate_id, deleted
   </sql>

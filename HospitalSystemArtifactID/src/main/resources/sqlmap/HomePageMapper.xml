@@ -19,6 +19,24 @@
     case_id, chief_complaint, present_ill, treatment_pres_ill, previous_ill, allergy, 
     health_checkup, check_type, check_advice, note, committed, deleted
   </sql>
+
+  <select id="see" parameterType="com.springMvc.entity.vo.MedicalRecord" statementType="CALLABLE">
+    call see(
+        #{regId, jdbcType=INTEGER, mode=IN},
+        #{type, jdbcType=VARCHAR, mode=IN},
+        #{chiefComplaint, jdbcType=VARCHAR, mode=IN},
+        #{presentIll, jdbcType=VARCHAR, mode=IN},
+        #{previousIll, jdbcType=VARCHAR, mode=IN},
+        #{allergy, jdbcType=VARCHAR, mode=IN},
+        #{healthCheckup, jdbcType=VARCHAR, mode=IN},
+        #{note, jdbcType=VARCHAR, mode=IN},
+        #{committed, jdbcType=BIT, mode=IN},
+        #{success, jdbcType=BIT, mode=OUT}
+      );
+  </select>
+
+
+  <!-- 以下为自动生成的代码 -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
