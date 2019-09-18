@@ -26,9 +26,12 @@
         #{type, jdbcType=VARCHAR, mode=IN},
         #{chiefComplaint, jdbcType=VARCHAR, mode=IN},
         #{presentIll, jdbcType=VARCHAR, mode=IN},
+        #{treatmentPresIll, jdbcType=VARCHAR, mode=IN},
         #{previousIll, jdbcType=VARCHAR, mode=IN},
         #{allergy, jdbcType=VARCHAR, mode=IN},
         #{healthCheckup, jdbcType=VARCHAR, mode=IN},
+        #{checkType, jdbcType=VARCHAR, mode=IN},
+        #{checkAdv, jdbcType=VARCHAR, mode=IN},
         #{note, jdbcType=VARCHAR, mode=IN},
         #{committed, jdbcType=BIT, mode=IN},
         #{success, jdbcType=BIT, mode=OUT}

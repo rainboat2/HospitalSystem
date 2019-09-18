@@ -90,7 +90,7 @@
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <h4>未诊患者</h4>
-                        <div class="patient-table">
+                        <div class="fix-height-table">
                             <table id="wait-for-diagnose" class="table table-hover">
                                 <tbody>
                                 <tr>
@@ -104,7 +104,7 @@
 
                         </div>
                         <h4>已诊患者</h4>
-                        <div class="patient-table">
+                        <div class="fix-height-table">
                             <table id="diagnosed" class="table table-hover">
                                 <tbody>
                                 <tr>
@@ -137,7 +137,7 @@
                             <li><a href="#fee" data-toggle="tab">费用查询</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div id="home" class="tab-pane active cont">
+                            <div id="home" class="tab-pane cont">
                                 <p id="err-message" class="error-message"></p>
                                 <table class="col-md-12 button-panel">
                                     <tr>
@@ -214,12 +214,12 @@
                                         <label for="type"></label>
                                         <div class="col-sm-3">
                                             <select id="type">
-                                                <option value="1">中医诊断</option>
-                                                <option value="2">西医诊断</option>
+                                                <option value="中医诊断">中医诊断</option>
+                                                <option value="西医诊断">西医诊断</option>
                                             </select>
                                         </div>
                                         <div class="pull-right">
-                                            <input type="button" class="word-button" value="增加" onclick="addRow()"/>
+                                            <input type="button" class="word-button" value="增加" onclick="addRowForDiagnose()"/>
                                             <input type="button" class="word-button" value="删除" onclick="deleteRow($('#diagnose-table')[0])"/>
                                         </div>
                                     </div>
@@ -244,17 +244,172 @@
                             <div id="check" class="tab-pane cont">
                                 temp
                             </div>
-                            <div id="examine" class="tab-pane">
+                            <div id="examine" class="tab-pane cont">
                                 temp
                             </div>
-                            <div id="diagnosis" class="tab-pane">
+                            <div id="diagnosis" class="tab-pane cont">
                                 temp
                             </div>
-                            <div id="technician" class="tab-pane">
+                            <div id="technician" class="tab-pane cont">
                                 temp
                             </div>
-                            <div id="medical1" class="tab-pane">
-                                temp
+                            <div id="medical1" class="tab-pane active cont">
+                                <em class="word-title">门诊诊断:</em>
+                                <table class="col-md-12 button-panel">
+                                    <tr>
+                                        <td style="width: 15%"></td>
+                                        <td>
+                                            <input class="word-button" type="button" value="增方" onclick="addPrescription()">
+                                        </td>
+                                        <td>
+                                            <input class="word-button" type="button" value="删方" onclick="deleteRow($('#prescription')[0])">
+                                        </td>
+                                        <td>
+                                            <input class="word-button" type="button" value="开立">
+                                        </td>
+                                        <td>
+                                            <input class="word-button" type="button" value="作废">
+                                        </td>
+                                        <td>
+                                            <input class="word-button" type="button" value="刷新" onclick="clearTable($('#prescription-detail')[0])">
+                                        </td>
+                                        <td style="width: 15%"></td>
+                                        <td>
+                                            <input class="word-button" type="button" value="增药" onclick="addPrescriptionDetail()">
+                                        </td>
+                                        <td>
+                                            <input class="word-button" type="button" value="删药" onclick="deleteRow($('#prescription-detail')[0])">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p class="error-message" id="medical-error-message"></p>
+                                <div class="row">
+                                    <div class="fix-height-table col-md-4">
+                                        <h5>处方</h5>
+                                        <table id="prescription" class="table table-hover">
+                                            <tbody>
+                                            <tr>
+                                                <td style="width: 10%"></td>
+                                                <td style="width:60%;">名称</td>
+                                                <td style="width:30%;">状态</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="fix-height-table col-md-8">
+                                        <h5>处方明细</h5>
+                                        <table id="prescription-detail" class="table table-hover">
+                                            <tbody>
+                                            <tr>
+                                                <td style="width: 8%"></td>
+                                                <td>id</td>
+                                                <td>药品名称</td>
+                                                <td>规格</td>
+                                                <td>单价</td>
+                                                <td>计量</td>
+                                                <td>频次</td>
+                                                <td>数量</td>
+                                                <td>用法</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-container">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#prescription-template-tab" data-toggle="tab">处方模板</a></li>
+                                        <li><a href="#" data-toggle="tab">常用药品</a></li>
+                                        <li><a href="#" data-toggle="tab">建议方案</a></li>
+                                        <li><a href="#" data-toggle="tab">历史处方</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="prescription-template-tab" class="tab-pane active cont">
+                                            <div class="row">
+                                                <div class="fix-height-table col-md-5">
+                                                    <!-- 用于控制输入区域的表格 -->
+                                                    <table class="col-sm-12">
+                                                        <tr>
+                                                            <td style="width: 20%">
+                                                                <label for="template-name">名称</label>
+                                                            </td>
+                                                            <td style="width: 60%;">
+                                                                <input style="width: 90%" id="template-name" type="text">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-space btn-primary btn-sm">
+                                                                    查询
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div style="height: 50px"></div>
+                                                    <table id="prescription-template" class="table table-hover">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="width:70%;">模板名称</td>
+                                                            <td style="width:30%;">范围</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>支气管哮喘</td>
+                                                            <td>科室</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>春季性常发哮喘</td>
+                                                            <td>科室</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>流行性腮腺炎NOS</td>
+                                                            <td>个人</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>病毒性肠胃炎</td>
+                                                            <td>科室</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="panel">
+                                                    <h5>
+                                                        模板详细
+                                                        <input class="word-button pull-right" type="button" value="使用该模板">
+                                                    </h5>
+                                                    <div class="fix-height-table">
+                                                        <table id="prescription-template-detail" class="table table-hover">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>药品名称</td>
+                                                                <td>规格</td>
+                                                                <td>单位</td>
+                                                                <td>用法</td>
+                                                                <td>用量</td>
+                                                                <td>频次</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>酚酞</td>
+                                                                <td>25g*1瓶</td>
+                                                                <td>瓶</td>
+                                                                <td>22</td>
+                                                                <td>11</td>
+                                                                <td>一天三次</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>鱼腥草颗粒</td>
+                                                                <td>1g/15g/袋</td>
+                                                                <td>袋</td>
+                                                                <td>22</td>
+                                                                <td>12</td>
+                                                                <td>一天一次</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div id="medical2" class="tab-pane">
                                 temp
@@ -270,8 +425,6 @@
 
     </div>
 </div>
-
-
 
 </body>
 
@@ -292,8 +445,5 @@
         $.pagePath = "${pageContext.request.contextPath}";
         getPatient();
     });
-
-
-
 </script>
 </html>

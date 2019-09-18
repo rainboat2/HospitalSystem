@@ -1,18 +1,17 @@
 package com.springMvc.controller;
 
 import com.springMvc.dao.DiseaseMapper;
+import com.springMvc.entity.vo.MedicalRecord;
+import com.springMvc.service.DrugService;
+import com.springMvc.service.HomePageService;
 import com.springMvc.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +24,12 @@ public class OutpatientDoctor {
     @Autowired
     private DiseaseMapper diseaseMapper;
 
+    @Autowired
+    private HomePageService homePageService;
+
+    @Autowired
+    private DrugService drugService;
+
     // 获取医生对应的未就诊和已诊断的病人
     @RequestMapping("/getPatientForDoctor")
     @ResponseBody
@@ -35,13 +40,27 @@ public class OutpatientDoctor {
     }
 
 
+    // 根据医生输入的信息，对疾病名称进行模糊查询
     @RequestMapping(value = "/getDiseaseInfo", method = RequestMethod.GET)
     @ResponseBody
     public List<Map<String, Object>> getDiseaseInfo(@RequestParam("term") String keyword){
-        List<Map<String, Object>> infos = diseaseMapper.selectByKeyword(keyword);
-        List<String> rs = new ArrayList<>(infos.size());
-        for (Map<String, Object> item : infos)
-            rs.add(item.get("name") + "-" + item.get("icd"));
-        return infos;
+        return diseaseMapper.selectByKeyword(keyword);
+    }
+
+    // 根据病历首页的信息，完成医生的看诊功能
+    @RequestMapping(value = "/see", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> see(@RequestBody MedicalRecord medicalRecord){
+        homePageService.see(medicalRecord);
+        Map<String, Object> rs = new HashMap<>();
+        rs.put("success", medicalRecord.getSuccess());
+        return rs;
+    }
+
+    // 根据关键字，模糊查询药品信息
+    @RequestMapping(value = "/getDrugs", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getDrugs(@RequestParam("term") String keyword){
+        return drugService.getDrugs(keyword);
     }
 }

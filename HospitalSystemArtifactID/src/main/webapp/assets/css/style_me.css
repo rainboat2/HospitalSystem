@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
-.patient-table{
-    height: 400px;
+.fix-height-table{
+    height: 300px;
     overflow-y: scroll;
 }
 
-.patient-table::-webkit-scrollbar{width:0}
+.fix-height-table::-webkit-scrollbar{width:0}
 
 .line {
     padding: 15px 5px 5px 15px;
@@ -22,7 +22,11 @@
     cursor: pointer;
 }
 
-.word-button::focus{
+.shadow-card{
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04)
+}
+
+.word-button:focus {
     outline: none;
 }
 
@@ -31,6 +35,14 @@
 }
 
 .button-panel{
-    background-color: #f0f0f0;
+    background-color: rgb(234, 241, 245);
     text-align: right;
+    padding: 10px;
+}
+
+.word-title{
+    background-color: rgb(236, 245, 255);
+    color: rgb(94, 171, 253);
+    font-style: normal;
+    padding: 5px;
 }

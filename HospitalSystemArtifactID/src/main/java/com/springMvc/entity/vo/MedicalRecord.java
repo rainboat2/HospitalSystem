@@ -10,10 +10,28 @@ public class MedicalRecord {
     private String previousIll;
     private String allergy;
     private String healthCheckup;
+    private String checkType;
+    private String checkAdv;
     private String note;
     private String diagnoses;
     private Boolean committed;
     private Boolean success;
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
+    }
+
+    public String getCheckAdv() {
+        return checkAdv;
+    }
+
+    public void setCheckAdv(String checkAdv) {
+        this.checkAdv = checkAdv;
+    }
 
     public Integer getRegId() {
         return regId;

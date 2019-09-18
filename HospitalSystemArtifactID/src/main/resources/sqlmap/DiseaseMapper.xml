@@ -14,7 +14,7 @@
     select icd, name
     from disease
     where name  LIKE CONCAT(CONCAT('%', #{keyword}), '%')
-    limit 5
+    limit 5;
   </select>
 
 

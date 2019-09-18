@@ -15,6 +15,14 @@
     <result column="create_date" property="createDate" jdbcType="DATE" />
     <result column="deleted" property="deleted" jdbcType="BIT" />
   </resultMap>
+
+  <select id="selectByKeyword" resultType="java.util.Map" parameterType="java.lang.String">
+    select drug_id, name, format, price
+    from drug
+    where name like concat(concat("%", #{keyword}), "%")
+    limit 5;
+  </select>
+
   <sql id="Base_Column_List" >
     drug_id, code, name, format, unit, manufacturer, dosage_id, type_id, price, mnemonic_code, 
     create_date, deleted
