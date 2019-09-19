@@ -11,6 +11,31 @@
     <result column="dept_id" property="deptId" jdbcType="INTEGER" />
     <result column="medical_no" property="medicalNo" jdbcType="INTEGER" />
   </resultMap>
+
+  <select id="prescribeDrugs" parameterType="com.springMvc.entity.vo.PrescriptionDrugs" statementType="CALLABLE">
+    call prescribe_drugs(
+        #{regId, jdbcType=INTEGER, mode=IN},
+        #{presName, jdbcType=VARCHAR, mode=IN},
+        #{type, jdbcType=VARCHAR, mode=IN},
+        #{presList, jdbcType=VARCHAR, mode=IN},
+        #{len, jdbcType=INTEGER, mode=IN},
+        #{presId, jdbcType=INTEGER, mode=OUT},
+        #{success, jdbcType=INTEGER, mode=OUT},
+        #{message, jdbcType=VARCHAR, mode=OUT}
+      );
+  </select>
+
+  <select id="getDrugsForPay" parameterType="java.util.Map" resultType="java.util.Map">
+    select d.name as name, d.price as price, p.amount as amount, p.state as state, p.pres_detail_id as presDetailId
+    from prescription_detail as p join drug as d using (drug_id)
+    where p.state = #{state, jdbcType=VARCHAR} and p.pres_id in (
+      select pres_id
+      from prescription
+      where medical_no = #{medicalNo, jdbcType=INTEGER}
+        and state = '开立'
+    );
+  </select>
+
   <sql id="Base_Column_List" >
     pres_id, case_id, name, state, type, deleted, dept_id, medical_no
   </sql>

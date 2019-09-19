@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,5 +39,15 @@ public class PageJumpController {
     @RequestMapping(value = "/doctor")
     public String getDoctorPage(){
         return "doctor";
+    }
+
+    @RequestMapping(value = "/payDrug")
+    public String getPayDrugPage(){
+        return "payDrug";
+    }
+
+    @RequestMapping(value = "/dispensing")
+    public String getDispensingPage(){
+        return "dispensing";
     }
 }

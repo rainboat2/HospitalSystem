@@ -86,7 +86,7 @@
     <!-- 页面主内容 -->
     <div class="be-content">
         <div class="main-content container-fluid">
-            <div class="col-sm-4">
+            <div id="patient-panel" class="col-sm-4">
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <h4>未诊患者</h4>
@@ -119,11 +119,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8">
+            <div id="work-panel" class="col-sm-8">
                 <div class="panel panel-default">
-                    <div class="col-sm-12 line">
-                        <p id="patient-info" class="pull-left">患者信息</p>
-                        <input type="button" onclick="return false;" value="诊毕" class="pull-right word-button"/>
+                    <div class="col-md-12 line">
+                        <table class="col-md-12">
+                            <tr>
+                                <td style="width:10%">
+                                    <em class="word-title">
+                                        <input id="hidden-button" class="word-button" type="button" value="隐藏患者栏" onclick="hiddenPatientPanel()">
+                                    </em>
+                                </td>
+                                <td style="width: 2%"></td>
+                                <td id="patient-info">
+                                    患者信息
+                                </td>
+                                <td>
+                                    <input type="button" onclick="endDiagnose()" value="诊毕" class="pull-right word-button"/>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="tab-container">
                         <ul class="nav nav-tabs">
@@ -262,16 +276,16 @@
                                             <input class="word-button" type="button" value="增方" onclick="addPrescription()">
                                         </td>
                                         <td>
-                                            <input class="word-button" type="button" value="删方" onclick="deleteRow($('#prescription')[0])">
+                                            <input class="word-button" type="button" value="删方" onclick="deletePrescription()">
                                         </td>
                                         <td>
-                                            <input class="word-button" type="button" value="开立">
+                                            <input class="word-button" type="button" value="开立" onclick="prescribe()">
                                         </td>
                                         <td>
                                             <input class="word-button" type="button" value="作废">
                                         </td>
                                         <td>
-                                            <input class="word-button" type="button" value="刷新" onclick="clearTable($('#prescription-detail')[0])">
+                                            <input class="word-button" type="button" value="刷新">
                                         </td>
                                         <td style="width: 15%"></td>
                                         <td>
@@ -284,19 +298,19 @@
                                 </table>
                                 <p class="error-message" id="medical-error-message"></p>
                                 <div class="row">
-                                    <div class="fix-height-table col-md-4">
+                                    <div class="fix-height-table col-md-3">
                                         <h5>处方</h5>
                                         <table id="prescription" class="table table-hover">
                                             <tbody>
                                             <tr>
                                                 <td style="width: 10%"></td>
-                                                <td style="width:60%;">名称</td>
-                                                <td style="width:30%;">状态</td>
+                                                <td style="width:55%;">名称</td>
+                                                <td style="width:35%;">状态</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="fix-height-table col-md-8">
+                                    <div class="fix-height-table col-md-9">
                                         <h5>处方明细</h5>
                                         <table id="prescription-detail" class="table table-hover">
                                             <tbody>

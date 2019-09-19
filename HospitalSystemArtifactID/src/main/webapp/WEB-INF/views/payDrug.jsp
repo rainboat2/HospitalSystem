@@ -17,6 +17,9 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/jqvmap/jqvmap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css" type="text/css"/>
 </head>
 <body>
@@ -50,7 +53,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="page-title">收费员>>退号</div>
+                <div class="page-title">收费员>>收费</div>
             </div>
         </div>
     </nav>
@@ -67,9 +70,9 @@
                                 <ul class="sub-menu">
                                     <li><a href="${pageContext.request.contextPath}/cashier">现场挂号</a>
                                     </li>
-                                    <li class="active"><a href="#">退号</a>
+                                    <li><a href="${pageContext.request.contextPath}/withdrawRegistration">退号</a>
                                     </li>
-                                    <li><a href="${pageContext.request.contextPath}/payDrug">收费</a>
+                                    <li class="active"><a href="#">收费</a>
                                     </li>
                                     <li><a href="${pageContext.request.contextPath}/dispensing">发药</a>
                                     </li>
@@ -111,12 +114,11 @@
                                                 <input id = "medicalNo" type="text" placeholder="病历号" autocomplete="off" class="form-control input-sm">
                                             </td>
                                             <td style="width:8%;text-align:right">
-                                                <button class="btn btn-space btn-primary" onclick="findRegistration()">
+                                                <button id="getDrugs" class="btn btn-space btn-primary" onclick="getDrugs('未缴费')">
                                                     <i class="icon icon-left mdi mdi-search"></i> 搜索
                                                 </button>
                                             </td>
-                                            <td>
-                                                <p id="finder-err"></p>
+                                            <td id="finder-err" class="error-message" style="margin: auto;text-align: center">
                                             </td>
                                         </tr>
                                         <tr>
@@ -146,175 +148,148 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 挂号表格-->
                         <div class="panel-heading">
-                            患者挂号信息
+                            患者药品信息
                         </div>
                         <div class="panel-body">
-                            <table id="reg-table" class="table table-striped table-hover table-fw-widget">
-                            </table>
+                            <div class="col-md-11 fix-height-table">
+                                <table id="drug-table" class="table table-hover">
+                                    <tr>
+                                        <td>
+                                            <div class="be-checkbox be-checkbox-sm">
+                                                <input id="check0" type="checkbox" onclick="selectAll(this)">
+                                                <label for="check0"></label>
+                                            </div>
+                                        </td>
+                                        <td>病历号</td>
+                                        <td>姓名</td>
+                                        <td>项目id</td>
+                                        <td>项目名称</td>
+                                        <td>单价</td>
+                                        <td>数量</td>
+                                        <td>状态</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-space btn-primary" onclick="pay()">
+                                    收费结算
+                                </button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- 弹窗内容-->
+<div id="dialog" class="dialog">
+    <div class="dialog-content col-md-6">
+        <div class="panel panel-flat">
+            <div class="panel-heading" style="text-align: center">
+                发票信息（交费）
+            </div>
+            <div class="panel-body">
+                <table id="form-table" class="col-md-12">
+                    <tr>
+                        <td>
+                            <label for="invoiceId">
+                                发票号：
+                            </label>
+                        </td>
+                        <td>
+                            <input id="invoiceId" type="text">
+                        </td>
+                        <td>
+                            <label for="dialog-medicalNo">
+                                病历号：
+                            </label>
+                        </td>
+                        <td>
+                            <input id="dialog-medicalNo" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="pat-name">
+                                患者姓名
+                            </label>
+                        </td>
+                        <td>
+                            <input id="pat-name" type="text">
+                        </td>
+                        <td>
+                            <label for="payType">
+                                支付方式
+                            </label>
+                        </td>
+                        <td>
+                            <select id = "payType"  class="form-control input-sm" style="width: 50%">
+                                <option value="0">现金</option>
+                                <option value="1">医保</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="receivable">
+                                应收金额
+                            </label>
+                        </td>
+                        <td>
+                            <input id="receivable" type="text">
+                        </td>
+                        <td>
+                            <label for="actually">
+                                实收金额
+                            </label>
+                        </td>
+                        <td>
+                            <input id="actually" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="change">
+                                找零金额
+                            </label>
+                        </td>
+                        <td>
+                            <input id="change" type="text">
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div style="text-align: center">
+                    <button onclick="cancel();" class="btn btn-space btn-warning">取消</button>
+                    <button onclick="changeState('已缴费');" class="btn btn-space btn-primary">收费</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </body>
-
-<script type="text/javascript">
-    // 根据病历号，查找所有对应的挂号单
-    function findRegistration() {
-        if (!check_Medical_no())
-            return;
-        const data = {medicalNo : document.getElementById("medicalNo").value};
-        $.ajax({
-            type: 'get',
-            dataType: 'json',
-            url: "${pageContext.request.contextPath}/getRegistrationInfo",
-            data: data,
-            success: function (result) {
-                console.log(result);
-                if (result["name"] == null)
-                    $("#finder-err").text("找不到患者！");
-                else{
-                    fillRegTable(result);
-                    $("#finder-err").text("");
-                    $("#name")[0].value = result.name;
-                    $("#idNumber")[0].value = result.idNumber;
-                    $("#address")[0].value = result.address;
-                }
-            },
-            error : function() {
-                alert("异常！");
-            }
-        });
-    }
-
-    function check_Medical_no() {
-        const medicalNo = document.getElementById("medicalNo").value;
-        const num = /^[1-9]\d*$/;
-        const err = $("#finder-err");
-        if (medicalNo === null || !num.test(medicalNo)){
-            err.text("输入的病历号必需为数字");
-            return false;
-        }
-        err.text("");
-        return true;
-    }
-
-    function fillRegTable(info) {
-        const table = $("#reg-table").DataTable();
-        table.clear();
-        const regList = info.regList;
-        for (var i = 0; i < regList.length; i++){
-            const reg = regList[i];
-            table.row.add({
-                "name": info.name,
-                "idNumber": info.idNumber,
-                "regId": reg.regId,
-                "regState": reg.regState,
-                "regTime": reg.regTime,
-                "deptName": reg.deptName,
-                "operate" : "<button class=\"btn btn-space btn-primary\" onclick=\"withdrawRegistration("
-                    + reg.regId + ")\">退号</button>"
-            })
-        }
-        table.draw();
-    }
-
-    function withdrawRegistration(regId){
-        $.ajax({
-            type: 'get',
-            dataType: 'json',
-            url: "${pageContext.request.contextPath}/withdraw",
-            data: {"regId" : regId},
-            success: function (result) {
-                if (result["success"] === 1)
-                    findRegistration();
-                else
-                    window.alert("退号失败，只有状态为未就诊的挂号才能退号！")
-            },
-            error: function () {
-                alert("异常");
-            }
-        })
-    }
-
-    //TODO: modifyState 修改表格中的状态
-
-</script>
 
 <script src="${pageContext.request.contextPath}/assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/main.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myjs/payDrug.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myjs/common.js" type="text/javascript" charset="GBK"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/plugins/buttons/js/dataTables.buttons.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/plugins/buttons/js/buttons.html5.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/plugins/buttons/js/buttons.flash.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/plugins/buttons/js/buttons.print.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/plugins/buttons/js/buttons.colVis.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datatables/plugins/buttons/js/buttons.bootstrap.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/js/app-tables-datatables.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/jquery.nestable/jquery.nestable.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/daterangepicker/js/daterangepicker.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/lib/bootstrap-slider/js/bootstrap-slider.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/assets/js/myjs/common.js"  type="text/javascript"></script>
+
+
 
 <script type="text/javascript">
     $(document).ready(function(){
         App.init();
-        init_reg_table();
+        setFormTableStyle();
+        $.pagePath = "${pageContext.request.contextPath}";
     });
-
-    function init_reg_table(){
-        $.extend( true, $.fn.dataTable.defaults, {
-            dom:
-                "<'row be-datatable-header'<'col-sm-6'l><'col-sm-6'f>>" +
-                "<'row be-datatable-body'<'col-sm-12'tr>>" +
-                "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
-        } );
-
-        const dataTableConfig = {
-            "bPaginate": true,  //是否分页。
-            "bStateSave": true,
-            "aLengthMenu": [5, 3, 1],
-            "language": {
-                "emptyTable": "无挂号信息",
-                "info": "显示 _START_ 到 _END_ 条数据 共 _TOTAL_ 条数据",
-                "infoEmpty": "无数据",
-                "infoFiltered": "(在 _MAX_ 条数据中查询)",
-                "lengthMenu": "显示 _MENU_ 条数据",
-                "search": "查询:",
-                "zeroRecords": "没有找到对应的数据",
-                "paginate": {
-                    "previous":"上一页",
-                    "next": "下一页",
-                    "last": "末页",
-                    "first": "首页"
-                }
-            },
-            "columns": [
-                {"data": "name", "title": "姓名"},
-                {"data": "idNumber", "title": "身份证号"},
-                {"data": "regId", "title": "挂号id"},
-                {"data": "regState", "title": "状态"},
-                {"data": "regTime", "title": "挂号时间"},
-                {"data": "deptName", "title": "科室"},
-                {"data": "operate", "title": "操作"}
-            ]
-        };
-
-        $("#reg-table").dataTable(dataTableConfig);
-    }
 </script>
 </html>

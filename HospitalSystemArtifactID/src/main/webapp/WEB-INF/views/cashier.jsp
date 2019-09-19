@@ -70,9 +70,9 @@
                                     </li>
                                     <li><a href="${pageContext.request.contextPath}/withdrawRegistration">退号</a>
                                     </li>
-                                    <li><a href="#">收费</a>
+                                    <li><a href="${pageContext.request.contextPath}/payDrug">收费</a>
                                     </li>
-                                    <li><a href="#">发票打印</a>
+                                    <li><a href="${pageContext.request.contextPath}/dispensing">发药</a>
                                     </li>
                                     <li><a href="#">患者费用查询</a>
                                     </li>
@@ -140,7 +140,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">地址</label>
+                                        <label for="address" class="col-sm-3 control-label">地址</label>
                                         <div class="col-sm-6">
                                             <input name = "address" id = "address" type="text"  class="form-control input-sm">
                                         </div>

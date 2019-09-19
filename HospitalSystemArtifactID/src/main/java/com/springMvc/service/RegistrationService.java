@@ -5,6 +5,7 @@ import com.springMvc.dao.PatientMapper;
 import com.springMvc.dao.RegistrationLevelMapper;
 import com.springMvc.dao.RegistrationMapper;
 import com.springMvc.entity.po.Patient;
+import com.springMvc.entity.po.Registration;
 import com.springMvc.entity.po.RegistrationLevel;
 import com.springMvc.entity.vo.PatientForDoctor;
 import com.springMvc.entity.vo.RegistrationDoctor;
@@ -98,4 +99,10 @@ public class RegistrationService {
         return rs;
     }
 
+    public boolean endDiagnose(Integer id){
+        Registration registration = registrationMapper.selectByPrimaryKey(id);
+        registration.setState("已诊断");
+        registrationMapper.updateByPrimaryKey(registration);
+        return true;
+    }
 }

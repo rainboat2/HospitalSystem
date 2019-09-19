@@ -63,29 +63,10 @@ function setAutoComplete(id) {
     })
 }
 
-// <div class="be-checkbox be-checkbox-sm">
-//     <input id="check1" type="checkbox">
-//     <label for="check1"></label>
-// </div>
-function generateCheckbox(id, tableId){
-    const div = document.createElement("div");
-    div.classList.add("be-checkbox", "be-checkbox-sm");
-
-    const input = document.createElement("input");
-    input.setAttribute("id", id + "-check-" + tableId);
-    input.setAttribute("type", "checkbox");
-
-    const label = document.createElement("label");
-    label.setAttribute("for", input.getAttribute("id"));
-
-    div.appendChild(input);
-    div.appendChild(label);
-    return div;
-}
 
 function deleteRow(table) {
     const rows = table.rows;
-    for (let i = 1; i < rows.length; i++){
+    for (let i = rows.length-1; i >= 1; i--){
         const cell = rows[i].cells[0];
         const input = cell.firstChild.firstChild;
         if (input.checked)
@@ -144,7 +125,6 @@ function submit() {
             console.log(rs);
             if (rs.success === true){
                 window.alert("提交成功");
-                getPatient();
             } else
                 window.alert("提交失败");
         },
@@ -186,12 +166,7 @@ function clearAll() {
     clearTable($("#diagnose-table")[0]);
 }
 
-function clearTable(table) {
-    const rows = table.rows;
-    console.log(rows.length);
-    for (let i = rows.length-1; i >=1; i--)
-        table.deleteRow(i);
-}
+
 
 function flush(){
     const err = document.getElementById("err-message");
@@ -280,25 +255,6 @@ function addPrescriptionDetail(){
     return row;
 }
 
-// 将table转化为Array对象
-function tableToArray(table) {
-    let i = 0, j = 0;
-    const rs = [];
-    table.find("tr").each(function(){
-        const row = [];
-        j = 0;
-        $(this).find("td").each(function(){
-            row[j] = $(this).text();
-            j++;
-        });
-        // 跳过表头
-        if (i !== 0) rs[i-1] = row;
-        i++;
-    });
-    console.log(rs);
-    return rs;
-}
-
 prescriptions = {};
 cur = null;  // 当前被选中的处方
 
@@ -325,15 +281,153 @@ function fillPrescriptionDetail(array) {
 }
 
 function deletePrescription(){
-    const table = $("#prescription");
+    const table = $("#prescription")[0];
     const rows = table.rows;
     for (let i = rows.length-1; i >= 1; i--){
         const cell = rows[i].cells[0];
         const input = cell.firstChild.firstChild;
         if (!input.checked)
             continue;
-        table.deleteRow(i);
         const id = rows[i].getAttribute("id");
-        
+        table.deleteRow(i);
+
+        // 删除处方对应的处方明细
+        prescriptions[id] = undefined;
+        // 当处方明细表显示的为被删除的处方，将表格清空，cur变为null
+        if (cur === id){
+            cur = null;
+            clearTable($("#prescription-detail")[0]);
+        }
     }
+}
+
+function hiddenPatientPanel() {
+    const patient = $("#patient-panel")[0];
+    const work = $("#work-panel")[0];
+    const button = $("#hidden-button")[0];
+    if (patient.style.display === "none"){
+        // 显示患者面板
+        patient.style.display = "";
+        work.classList.remove("col-md-12");
+        work.classList.add("col-md-8");
+        button.setAttribute("value", "隐藏患者栏");
+    }else{
+        // 将患者面板设为隐藏
+        patient.style.display = "none";
+        work.classList.remove("col-md-8");
+        work.classList.add("col-md-12");
+        button.setAttribute("value", "显示患者栏");
+    }
+}
+
+// 开立
+function prescribe() {
+    // 保存当前的处方
+    let message;
+    if (cur !== null)
+        prescriptions[cur] = tableToArray($("#prescription-detail"));
+
+    const regId = $("#form-regId")[0].value;
+    // 查看是否选中病人
+    if ( regId === null || regId === ""){
+        $("#medical-error-message").text("未选中病人");
+        return;
+    }
+
+    const table = $("#prescription")[0];
+    const rows = table.rows;
+    let hasSelected = false;
+    for (let i = rows.length-1; i >= 1; i--){
+        const cell = rows[i].cells[0];
+        const input = cell.firstChild.firstChild;
+        if (!input.checked)
+            continue;
+        hasSelected = true;
+        message = message + prescribeRow(rows[i]) + "\n";
+    }
+    if (!hasSelected)
+        message = "没有选中处方";
+    if (!isNaN(message))
+        $("#medical-error-message").text(message);
+}
+
+function prescribeRow(tr) {
+    const name = tr.cells[1].firstChild.nodeValue;
+    const state = tr.cells[2].firstChild.nodeValue;
+
+    if (state !== "暂存")
+        return "处方" + name + "开立失败, 原因：状态为" + state + "的处方不能开立";
+
+    const id = tr.getAttribute("id");
+    const detail = formatDetail(prescriptions[id]);
+    const data = {
+        regId : $("#form-regId")[0].value,
+        presName : name,
+        type : "西医诊断",
+        presList : detail,
+        len : prescriptions[id].length,
+        presId : -1,
+        success : false
+    };
+
+    console.log(data);
+    $.ajax({
+        type: "post",
+        dataType: "json",
+        contentType: 'application/json',
+        url: $.pagePath + "/prescribeDrugs",
+        data: JSON.stringify(data),
+        success: function (rs) {
+            if (rs.success){
+                tr.cells[2].firstChild.nodeValue = "开立";
+            } else
+                window.alert("处方" + name + "开立失败");
+        },
+        error: function () {
+            window.alert("由于未知原因，处方" + name + "开立失败");
+        }
+    })
+}
+
+// 处方明细格式 [0:checkbox 1:药品id 2:药品名称 3:规格 4:单价 5:计量 6:频次 7:数量 8:用法]
+// 服务器需求格式:
+// pres_list: row1-row2-row3
+// row: drug_id,amount,dosage,frequency,number_per,usage
+function formatDetail(detail){
+    let presList = "";
+    for (let d of detail){
+        const row = d[1] + "," + d[7] + "," + d[5] + "," + d[6] + "," + d[7] + "," + d[8];
+        // 避免最后结果以“-”开头
+        if (presList === "")
+            presList = row;
+        else
+            presList = presList + "-" + row;
+    }
+    return presList;
+}
+
+function endDiagnose() {
+    const regId = $("#form-regId")[0].value;
+    if (regId === null || regId === "")
+        window.alert("未选中病人");
+    $.ajax({
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {regId : regId},
+        url: $.pagePath + "/endDiagnose",
+        success: function (rs) {
+            if (rs.success){
+                clearTable($("#wait-for-diagnose")[0]);
+                clearTable($("#diagnosed")[0]);
+                getPatient();
+                $("#form-regId")[0].value = "";
+                $("#patient-info").text("患者信息");
+            } else
+                window.alert("操作失败");
+        },
+        error: function () {
+            window.alert("异常");
+        }
+    })
 }
